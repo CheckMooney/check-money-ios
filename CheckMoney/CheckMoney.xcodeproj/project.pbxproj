@@ -13,9 +13,11 @@
 		687F5A2227216E9D00288E61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2027216E9D00288E61 /* Main.storyboard */; };
 		687F5A2427216E9D00288E61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2327216E9D00288E61 /* Assets.xcassets */; };
 		687F5A2727216E9D00288E61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2527216E9D00288E61 /* LaunchScreen.storyboard */; };
+		A1EFD929578FA4DE948A3987 /* Pods_CheckMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A90748EE77347CB99D0103 /* Pods_CheckMoney.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		044AA87670E7AE7F0C20139E /* Pods-CheckMoney.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckMoney.debug.xcconfig"; path = "Target Support Files/Pods-CheckMoney/Pods-CheckMoney.debug.xcconfig"; sourceTree = "<group>"; };
 		687F5A1727216E9D00288E61 /* CheckMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		687F5A1A27216E9D00288E61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		687F5A1C27216E9D00288E61 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		687F5A2327216E9D00288E61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		687F5A2627216E9D00288E61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		687F5A2827216E9D00288E61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98A90748EE77347CB99D0103 /* Pods_CheckMoney.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckMoney.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEA78EA3D8EC0A4761EB28FC /* Pods-CheckMoney.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckMoney.release.xcconfig"; path = "Target Support Files/Pods-CheckMoney/Pods-CheckMoney.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1EFD929578FA4DE948A3987 /* Pods_CheckMoney.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		353BDC1F37535245BCBC66D1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				044AA87670E7AE7F0C20139E /* Pods-CheckMoney.debug.xcconfig */,
+				CEA78EA3D8EC0A4761EB28FC /* Pods-CheckMoney.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		687F5A0E27216E9C00288E61 = {
 			isa = PBXGroup;
 			children = (
 				687F5A1927216E9D00288E61 /* CheckMoney */,
 				687F5A1827216E9D00288E61 /* Products */,
+				353BDC1F37535245BCBC66D1 /* Pods */,
+				F078DDA3E5EFAF387BD2111F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +84,14 @@
 			path = CheckMoney;
 			sourceTree = "<group>";
 		};
+		F078DDA3E5EFAF387BD2111F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				98A90748EE77347CB99D0103 /* Pods_CheckMoney.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 687F5A2B27216E9D00288E61 /* Build configuration list for PBXNativeTarget "CheckMoney" */;
 			buildPhases = (
+				2FC505FFFD67F35E4C1A8E00 /* [CP] Check Pods Manifest.lock */,
 				687F5A1327216E9D00288E61 /* Sources */,
 				687F5A1427216E9D00288E61 /* Frameworks */,
 				687F5A1527216E9D00288E61 /* Resources */,
+				2DD477FDEA17E72EB9F6530E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -131,6 +158,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2DD477FDEA17E72EB9F6530E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CheckMoney/Pods-CheckMoney-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CheckMoney/Pods-CheckMoney-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CheckMoney/Pods-CheckMoney-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2FC505FFFD67F35E4C1A8E00 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CheckMoney-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		687F5A1327216E9D00288E61 /* Sources */ = {
@@ -283,6 +352,7 @@
 		};
 		687F5A2C27216E9D00288E61 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 044AA87670E7AE7F0C20139E /* Pods-CheckMoney.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -304,6 +374,7 @@
 		};
 		687F5A2D27216E9D00288E61 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CEA78EA3D8EC0A4761EB28FC /* Pods-CheckMoney.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
