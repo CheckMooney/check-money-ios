@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         // 애플리케이션이 실행된 직후 사용자의 화면에 보여지기 직전에 호출
         
+        // 자동 로그인 시도
+        
         googleSignInConfig = GIDConfiguration.init(
             clientID: "500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com",
             serverClientID: "500159069581-m2dqev5jhbpumksnoodl7bmi90v5kjtl.apps.googleusercontent.com")
@@ -57,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let handled = GIDSignIn.sharedInstance.handle(url)
         if (handled) {
+            print("open url : \(options)")
             return true
         }
         
