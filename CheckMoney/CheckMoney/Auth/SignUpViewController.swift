@@ -61,7 +61,7 @@ class SignUpViewController: UIViewController {
         if let code = codeTextField.text, checkValidCode(code) {
             wrongNumText.isHidden = true
             let requestData = AuthConfirmCodeRequest(email: email, auth_num: code)
-            NetworkHandler.sendPost(endpoint: "api/auth/confirm", request: requestData, callback: {(success, response: AuthConfirmCodeResponse?) in
+            NetworkHandler.sendPost(endpoint: "auth/confirm", request: requestData, callback: {(success, response: AuthConfirmCodeResponse?) in
                 DispatchQueue.main.sync {
                     self.loadingView.isHidden = true
                     

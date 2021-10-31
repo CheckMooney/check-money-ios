@@ -12,8 +12,8 @@
 		687F5A2227216E9D00288E61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2027216E9D00288E61 /* Main.storyboard */; };
 		687F5A2427216E9D00288E61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2327216E9D00288E61 /* Assets.xcassets */; };
 		687F5A2727216E9D00288E61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2527216E9D00288E61 /* LaunchScreen.storyboard */; };
-		68903C09272C08B9009A936C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68903C08272C08B9009A936C /* LoginViewController.swift */; };
 		68903C0B272C08D9009A936C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68903C0A272C08D9009A936C /* SignUpViewController.swift */; };
+		68A6C79F272EB41D00732EEA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C79E272EB41D00732EEA /* LoginViewController.swift */; };
 		68AA6E98272D5BF0009EEA76 /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AA6E97272D5BF0009EEA76 /* NetworkHandler.swift */; };
 		68AA6E9A272D62BC009EEA76 /* ApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AA6E99272D62BC009EEA76 /* ApiBase.swift */; };
 		68AFABBC2722F94D00F15659 /* client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68AFABBB2722F94D00F15659 /* client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist */; };
@@ -29,8 +29,8 @@
 		687F5A2327216E9D00288E61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		687F5A2627216E9D00288E61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		687F5A2827216E9D00288E61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		68903C08272C08B9009A936C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../../../../../.Trash/Auth/LoginViewController.swift; sourceTree = "<group>"; };
 		68903C0A272C08D9009A936C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		68A6C79E272EB41D00732EEA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		68AA6E97272D5BF0009EEA76 /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		68AA6E99272D62BC009EEA76 /* ApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiBase.swift; sourceTree = "<group>"; };
 		68AFABBB2722F94D00F15659 /* client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist"; path = "../../../../Downloads/client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist"; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		68903C07272C08A3009A936C /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				68903C08272C08B9009A936C /* LoginViewController.swift */,
+				68A6C79E272EB41D00732EEA /* LoginViewController.swift */,
 				68903C0A272C08D9009A936C /* SignUpViewController.swift */,
 			);
 			path = Auth;
@@ -226,7 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68903C09272C08B9009A936C /* LoginViewController.swift in Sources */,
+				68A6C79F272EB41D00732EEA /* LoginViewController.swift in Sources */,
 				687F5A1B27216E9D00288E61 /* AppDelegate.swift in Sources */,
 				68903C0B272C08D9009A936C /* SignUpViewController.swift in Sources */,
 				68AA6E98272D5BF0009EEA76 /* NetworkHandler.swift in Sources */,

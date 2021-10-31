@@ -13,7 +13,6 @@ protocol BaseRequest : Codable {
 
 protocol BaseResponse : Codable {
     var result: Bool {get set}
-    
 }
 
 struct AuthEmailRequest: BaseRequest {
@@ -31,4 +30,13 @@ struct AuthConfirmCodeRequest: BaseRequest {
 
 struct AuthConfirmCodeResponse: BaseResponse {
     var result: Bool
+}
+
+struct GoogleLoginRequest: BaseRequest {
+    var id_token: String
+}
+
+struct GoogleLoginResponse: BaseResponse {
+    var result: Bool
+    var token: String
 }
