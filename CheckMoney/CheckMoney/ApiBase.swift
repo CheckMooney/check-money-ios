@@ -7,11 +7,28 @@
 
 import Foundation
 
-struct BaseRequest {
+protocol BaseRequest : Codable {
     
 }
 
-struct BaseResponse {
-    var result: Bool
+protocol BaseResponse : Codable {
+    var result: Bool {get set}
     
+}
+
+struct AuthEmailRequest: BaseRequest {
+    var email: String
+}
+
+struct AuthEmailResponse: BaseResponse {
+    var result: Bool
+}
+
+struct AuthConfirmCodeRequest: BaseRequest {
+    var email: String
+    var auth_num: String
+}
+
+struct AuthConfirmCodeResponse: BaseResponse {
+    var result: Bool
 }
