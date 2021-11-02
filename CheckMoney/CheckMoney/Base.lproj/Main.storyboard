@@ -3,7 +3,6 @@
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -314,6 +313,21 @@
             </objects>
             <point key="canvasLocation" x="-1052" y="-155"/>
         </scene>
+        <!--Main View Controller-->
+        <scene sceneID="tQz-2i-XHJ">
+            <objects>
+                <viewController id="rxv-9t-vc1" customClass="MainViewController" customModule="CheckMoney" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fwk-l8-ETf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ZLl-We-8VW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6O0-Zo-Ecs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-16" y="723"/>
+        </scene>
         <!--아이디 / 비밀번호 찾기-->
         <scene sceneID="wkF-zh-7It">
             <objects>
@@ -347,16 +361,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tE5-ib-TFh" userLabel="CustomNavigation">
                                 <rect key="frame" x="0.0" y="49" width="375" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eV8-ME-YyU">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eV8-ME-YyU">
                                         <rect key="frame" x="15" y="0.0" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="0eP-uT-roJ"/>
                                             <constraint firstAttribute="width" constant="30" id="XaX-J8-ewc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button">
-                                            <imageReference key="image" image="arrow.uturn.backward" catalog="system" symbolScale="large"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" image="arrow.uturn.backward" catalog="system">
+                                            <color key="titleColor" systemColor="labelColor"/>
                                         </state>
                                         <connections>
                                             <action selector="backButtonClicked:" destination="teu-GA-3Qz" eventType="touchUpInside" id="0pd-9O-N6H"/>
@@ -433,7 +447,7 @@
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="❗️유효하지 않는 이메일입니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c31-bL-qxf">
                                         <rect key="frame" x="0.0" y="69" width="152" height="14.333333333333329"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                         <color key="textColor" red="0.87845611570000004" green="0.0" blue="0.0001940400107" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -585,17 +599,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KXS-ox-JE2" userLabel="CustomNavigation">
                                 <rect key="frame" x="0.0" y="49" width="375" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P8r-C0-n18">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P8r-C0-n18">
                                         <rect key="frame" x="15" y="0.0" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="Niw-xY-5ZB"/>
                                             <constraint firstAttribute="height" constant="30" id="Zuz-I8-1A1"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Button">
-                                            <imageReference key="image" image="arrow.uturn.backward" catalog="system" symbolScale="large"/>
-                                        </state>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" image="arrow.uturn.backward" catalog="system"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="회원가입" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OWf-EZ-Zdg">
                                         <rect key="frame" x="158" y="4.6666666666666643" width="59" height="21"/>
@@ -746,6 +758,9 @@
     <resources>
         <image name="arrow.uturn.backward" catalog="system" width="128" height="112"/>
         <image name="text-logo" width="682.66668701171875" height="170.66667175292969"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
