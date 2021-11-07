@@ -9,6 +9,8 @@ import UIKit
 import GoogleSignIn
 
 class LoginViewController: UIViewController {
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var googleLoginButton: GIDSignInButton!
     @IBOutlet weak var loadingView: UIView!
     
@@ -17,6 +19,16 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
 
         googleLoginButton.style = .wide
+    }
+    
+    @IBAction func emailLoginClicked(_ sender: Any) {
+        let email = emailTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        guard email.isEmpty, password.isEmpty else {
+            //TODO: 실패 팝업
+            return
+        }
+        let emailLoginRequest = EmailLoginRequest(email: email, password: password)
     }
     
     @IBAction func googleLoginClicked(_ sender: Any) {
@@ -31,7 +43,7 @@ class LoginViewController: UIViewController {
             let idToken = user?.authentication.idToken
             print("google Login Result: \(user?.profile?.name ?? " "), token: \(idToken ?? " ")")
             
-            NetworkHandler.sendPost(endpoint: "auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: GoogleLoginResponse?) in
+            NetworkHandler.sendPost(endpoint: "auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: LoginResponse?) in
                 guard isSuccess == true else {
                     DispatchQueue.main.sync {
                         self.setLoadingIndicator(show: false)

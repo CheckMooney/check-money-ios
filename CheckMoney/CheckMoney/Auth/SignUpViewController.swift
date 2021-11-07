@@ -49,7 +49,8 @@ class SignUpViewController: UIViewController {
                     }
                     else {
                         print("실패")
-                        let alert = UIAlertController(title: nil, message: "인증번호 전송에 실패하였습니다.", preferredStyle: UIAlertController.Style.alert)
+                        let respStr = ResponseCode(rawValue: response?.code ?? 0)?.toString()
+                        let alert = UIAlertController(title: nil, message: "인증번호 전송에 실패하였습니다.(\(String(describing: respStr))", preferredStyle: UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }
@@ -57,24 +58,27 @@ class SignUpViewController: UIViewController {
             }
         }
     }
+    
     @IBAction func confirmButtonClicked(_ sender: Any) {
         if let code = codeTextField.text, checkValidCode(code) {
             wrongNumText.isHidden = true
             let requestData = AuthConfirmCodeRequest(email: email, auth_num: code)
+            
             NetworkHandler.sendPost(endpoint: "auth/confirm", request: requestData, callback: {(success, response: AuthConfirmCodeResponse?) in
                 DispatchQueue.main.sync {
                     self.loadingView.isHidden = true
                     
                     if let result = response?.result, result == true {
                         let secondVC = self.storyboard?.instantiateViewController(identifier: "signinDataVC") as? InputSignInDataViewController
-                        self.present(secondVC!, animated: true, completion: nil)
+                        secondVC?.email = self.email
+                        self.navigationController?.pushViewController(secondVC!, animated: true)
                     }
                     else {
+                        self.wrongNumText.text = ResponseCode(rawValue: response?.code ?? 0)?.toString()
                         self.wrongNumText.isHidden = false
                     }
                 }
-            }
-            )
+            })
         }
         else {
             wrongNumText.isHidden = false
@@ -91,8 +95,4 @@ class SignUpViewController: UIViewController {
         let regex = "^[0-9]{6}$"
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: code)
     }
-}
-
-class InputSignInDataViewController: UIViewController {
-    
 }

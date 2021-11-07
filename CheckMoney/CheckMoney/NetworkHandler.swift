@@ -43,15 +43,15 @@ class NetworkHandler {
                 return
             }
             
-            guard let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print("sendPost statusCode is \((response as? HTTPURLResponse)?.statusCode ?? 0)")
+            guard let data = data else {
                 callback(false, nil)
                 return
             }
+            print("sendPost statusCode is \((response as? HTTPURLResponse)?.statusCode ?? 0)")
             
             let decoder = JSONDecoder()
             let decodedData = try? decoder.decode(V.self, from: data)
-            callback(true, decodedData!)
+            callback((response as? HTTPURLResponse)?.statusCode == 200, decodedData ?? nil)
         }
         
         task.resume()

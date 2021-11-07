@@ -14,9 +14,12 @@
 		687F5A2727216E9D00288E61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2527216E9D00288E61 /* LaunchScreen.storyboard */; };
 		68903C0B272C08D9009A936C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68903C0A272C08D9009A936C /* SignUpViewController.swift */; };
 		68A6C79F272EB41D00732EEA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C79E272EB41D00732EEA /* LoginViewController.swift */; };
+		68A6C7A2272EBD1D00732EEA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C7A1272EBD1D00732EEA /* MainViewController.swift */; };
+		68A6C7A4272EBE1C00732EEA /* InputSignInDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C7A3272EBE1C00732EEA /* InputSignInDataViewController.swift */; };
 		68AA6E98272D5BF0009EEA76 /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AA6E97272D5BF0009EEA76 /* NetworkHandler.swift */; };
 		68AA6E9A272D62BC009EEA76 /* ApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AA6E99272D62BC009EEA76 /* ApiBase.swift */; };
 		68AFABBC2722F94D00F15659 /* client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68AFABBB2722F94D00F15659 /* client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist */; };
+		68EC9804273789250057646A /* ResponseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC9803273789250057646A /* ResponseCode.swift */; };
 		FA25E518EE01C813904D9A96 /* Pods_CheckMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95A426456D5D66B8B8ECE2C6 /* Pods_CheckMoney.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,9 +34,12 @@
 		687F5A2827216E9D00288E61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68903C0A272C08D9009A936C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		68A6C79E272EB41D00732EEA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		68A6C7A1272EBD1D00732EEA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		68A6C7A3272EBE1C00732EEA /* InputSignInDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSignInDataViewController.swift; sourceTree = "<group>"; };
 		68AA6E97272D5BF0009EEA76 /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		68AA6E99272D62BC009EEA76 /* ApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiBase.swift; sourceTree = "<group>"; };
 		68AFABBB2722F94D00F15659 /* client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist"; path = "../../../../Downloads/client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist"; sourceTree = "<group>"; };
+		68EC9803273789250057646A /* ResponseCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCode.swift; sourceTree = "<group>"; };
 		95A426456D5D66B8B8ECE2C6 /* Pods_CheckMoney.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckMoney.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA78EA3D8EC0A4761EB28FC /* Pods-CheckMoney.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckMoney.release.xcconfig"; path = "Target Support Files/Pods-CheckMoney/Pods-CheckMoney.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +86,7 @@
 		687F5A1927216E9D00288E61 /* CheckMoney */ = {
 			isa = PBXGroup;
 			children = (
+				68A6C7A0272EBCFF00732EEA /* Main */,
 				68903C07272C08A3009A936C /* Auth */,
 				687F5A1A27216E9D00288E61 /* AppDelegate.swift */,
 				687F5A1C27216E9D00288E61 /* SceneDelegate.swift */,
@@ -90,6 +97,7 @@
 				68AFABBB2722F94D00F15659 /* client_500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com.plist */,
 				68AA6E97272D5BF0009EEA76 /* NetworkHandler.swift */,
 				68AA6E99272D62BC009EEA76 /* ApiBase.swift */,
+				68EC9803273789250057646A /* ResponseCode.swift */,
 			);
 			path = CheckMoney;
 			sourceTree = "<group>";
@@ -99,8 +107,17 @@
 			children = (
 				68A6C79E272EB41D00732EEA /* LoginViewController.swift */,
 				68903C0A272C08D9009A936C /* SignUpViewController.swift */,
+				68A6C7A3272EBE1C00732EEA /* InputSignInDataViewController.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		68A6C7A0272EBCFF00732EEA /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				68A6C7A1272EBD1D00732EEA /* MainViewController.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		F078DDA3E5EFAF387BD2111F /* Frameworks */ = {
@@ -226,12 +243,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68A6C7A2272EBD1D00732EEA /* MainViewController.swift in Sources */,
 				68A6C79F272EB41D00732EEA /* LoginViewController.swift in Sources */,
 				687F5A1B27216E9D00288E61 /* AppDelegate.swift in Sources */,
 				68903C0B272C08D9009A936C /* SignUpViewController.swift in Sources */,
 				68AA6E98272D5BF0009EEA76 /* NetworkHandler.swift in Sources */,
+				68EC9804273789250057646A /* ResponseCode.swift in Sources */,
 				687F5A1D27216E9D00288E61 /* SceneDelegate.swift in Sources */,
 				68AA6E9A272D62BC009EEA76 /* ApiBase.swift in Sources */,
+				68A6C7A4272EBE1C00732EEA /* InputSignInDataViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
