@@ -7,4 +7,6 @@ target 'CheckMoney' do
 
   # Pods for CheckMoney
   pod 'GoogleSignIn'
+  pod 'JJFloatingActionButton'
+  pod 'SideMenu'
 end

@@ -12,9 +12,13 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
+  - JJFloatingActionButton (2.5.0)
+  - SideMenu (6.5.0)
 
 DEPENDENCIES:
   - GoogleSignIn
+  - JJFloatingActionButton
+  - SideMenu
 
 SPEC REPOS:
   trunk:
@@ -22,13 +26,17 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - JJFloatingActionButton
+    - SideMenu
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
+  SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
 
-PODFILE CHECKSUM: 47a8ce1f98bfa4817560d0e4f8007c65864014af
+PODFILE CHECKSUM: c45f4c59e21d8b93b622ac686debc06e13bdd0f7
 
 COCOAPODS: 1.10.1

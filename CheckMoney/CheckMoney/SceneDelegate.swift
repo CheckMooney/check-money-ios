@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("scene")
         let canAutoLogin = (UIApplication.shared.delegate as! AppDelegate).autoLoginEnabled
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = canAutoLogin ? storyboard.instantiateViewController(withIdentifier: "MainVC") : storyboard.instantiateViewController(withIdentifier: "LoginVC")
+        let vc = true ? storyboard.instantiateViewController(withIdentifier: "MainVC") : storyboard.instantiateViewController(withIdentifier: "LoginVC")
         let naviController = UINavigationController(rootViewController: vc)
         naviController.isNavigationBarHidden = true
         self.window?.rootViewController = naviController
