@@ -50,7 +50,7 @@ class SignUpViewController: UIViewController {
                     else {
                         print("실패")
                         let respStr = ResponseCode(rawValue: response?.code ?? 0)?.toString()
-                        let alert = UIAlertController(title: nil, message: "인증번호 전송에 실패하였습니다.(\(String(describing: respStr))", preferredStyle: UIAlertController.Style.alert)
+                        let alert = UIAlertController(title: nil, message: "인증번호 전송에 실패하였습니다.(\(respStr!))", preferredStyle: UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }

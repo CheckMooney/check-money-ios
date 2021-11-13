@@ -15,7 +15,6 @@ protocol BaseResponse : Codable {
     var result: Bool {get}
     var code: Int {get}
     var message: String {get}
-    
 }
 
 struct AuthEmailRequest: BaseRequest {
@@ -64,6 +63,18 @@ struct LoginResponse: BaseResponse {
     var code: Int
     var message: String
     var result: Bool
-    var token: String
+    var access_token: String = ""
+    var refresh_token: String = ""
+}
+
+struct LoginRefreshRequest: BaseRequest {
     var refresh_token: String
+}
+
+struct LoginRefreshResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+    var access_token: String = ""
+    var refresh_token: String = ""
 }

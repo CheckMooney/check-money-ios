@@ -14,25 +14,39 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var googleLoginButton: GIDSignInButton!
     @IBOutlet weak var loadingView: UIView!
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
+        print("loginViewController load")
         googleLoginButton.style = .wide
     }
-    
+
     @IBAction func emailLoginClicked(_ sender: Any) {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
-        guard email.isEmpty, password.isEmpty else {
-            //TODO: 실패 팝업
+        guard !email.isEmpty, !password.isEmpty else {
+            let alert = UIAlertController(title: "로그인 실패", message: "로그인 정보를 입력해주세요.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             return
         }
+        
         let emailLoginRequest = EmailLoginRequest(email: email, password: password)
+        NetworkHandler.sendPost(endpoint: "auth/login/email", request: emailLoginRequest) { (isSuccess, response: LoginResponse?) in
+            guard isSuccess else {
+                if response == nil {
+                    return
+                }
+                print("login fail: \(response!.code), \(response!.message)")
+                return
+            }
+            self.moveToMainView(accessToken: response!.access_token, refreshToken: response!.refresh_token)
+        }
     }
     
     @IBAction func googleLoginClicked(_ sender: Any) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         GIDSignIn.sharedInstance.signIn(with: appDelegate.googleSignInConfig!, presenting: self, callback: { user, error in
             guard error == nil else {
                 print (error.debugDescription)
@@ -51,7 +65,7 @@ class LoginViewController: UIViewController {
                     return
                 }
                 print("로그인 성공쓰")
-                // TODO: Response 내 토큰 값 저장하고 메인 화면으로 이동시켜야 함
+                self.moveToMainView(accessToken: response!.access_token, refreshToken: response!.refresh_token)
             }
         })
     }
@@ -63,6 +77,15 @@ class LoginViewController: UIViewController {
         }
         else {
             self.loadingView.isHidden = true
+        }
+    }
+    
+    func moveToMainView(accessToken: String, refreshToken: String) {
+        self.appDelegate.accessToken = accessToken
+        UserDefaults.standard.set(refreshToken, forKey: "refresh_token")
+        
+        DispatchQueue.main.sync {
+            UIApplication.shared.windows.first!.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC")
         }
     }
 }
