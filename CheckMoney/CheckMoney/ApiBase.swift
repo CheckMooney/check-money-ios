@@ -78,3 +78,30 @@ struct LoginRefreshResponse: BaseResponse {
     var access_token: String = ""
     var refresh_token: String = ""
 }
+
+struct CategoryResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+    var category: [String]
+}
+
+struct AccountListResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+    var rows: [Account]
+    var count: Int
+}
+
+struct AddAccountRequest: BaseRequest {
+    var title: String
+    var description: String
+}
+
+struct AddAccountResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+    var id: Int
+}

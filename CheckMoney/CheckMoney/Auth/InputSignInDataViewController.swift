@@ -67,7 +67,7 @@ class InputSignInDataViewController: UIViewController {
         
         setLoadingIndicator(show: true)
         let requestData = AuthJoinRequest(email: email, password: password, name: name)
-        NetworkHandler.sendPost(endpoint: "auth/join", request: requestData) { (success, response: AuthJoinResponse?) in
+        NetworkHandler.post(endpoint: "auth/join", request: requestData) { (success, response: AuthJoinResponse?) in
             DispatchQueue.main.sync {
                 self.setLoadingIndicator(show: false)
                 

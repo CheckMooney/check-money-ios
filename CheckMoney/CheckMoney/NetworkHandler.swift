@@ -12,7 +12,7 @@ class NetworkHandler {
     static let session = URLSession(configuration: URLSessionConfiguration.default)
     static let baseUrl = "http://ec2-3-38-105-161.ap-northeast-2.compute.amazonaws.com:3001/api/"
     
-    static func sendPost<T, V>(endpoint: String, request: T, callback: @escaping responseClosure<V>) where T:BaseRequest, V:BaseResponse {
+    static func post<T, V>(endpoint: String, request: T, callback: @escaping responseClosure<V>) where T:BaseRequest, V:BaseResponse {
         guard let url = URL(string: baseUrl + endpoint) else {
             print("url is nil")
             callback(false, nil)
@@ -33,8 +33,28 @@ class NetworkHandler {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
-        urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        print("Send POST Request: \(endpoint)")
         urlRequest.httpBody = encodedData
+        
+        sendRequest(&urlRequest, callback: callback)
+    }
+    
+    static func get<T>(endpoint: String, callback: @escaping responseClosure<T>) where T: BaseResponse {
+        guard let url = URL(string: baseUrl + endpoint) else {
+            print("url is nil")
+            callback(false, nil)
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+        print("Send GET Request: \(endpoint)")
+        sendRequest(&urlRequest, callback: callback)
+    }
+    
+    static func sendRequest<V>(_ urlRequest: inout URLRequest, callback: @escaping responseClosure<V>) where V: BaseResponse {
+        urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("Bearer \(UserData.accessToken)", forHTTPHeaderField: "Authorization")
         
         let task = URLSession(configuration: .default).dataTask(with: urlRequest) { data, response, error in
             guard error == nil else {
@@ -42,12 +62,11 @@ class NetworkHandler {
                 callback(false, nil)
                 return
             }
-            
             guard let data = data else {
                 callback(false, nil)
                 return
             }
-            print("sendPost statusCode is \((response as? HTTPURLResponse)?.statusCode ?? 0)")
+            print("\(response!.url!) statusCode is \((response as? HTTPURLResponse)?.statusCode ?? 0)")
             
             let decoder = JSONDecoder()
             let decodedData = try? decoder.decode(V.self, from: data)

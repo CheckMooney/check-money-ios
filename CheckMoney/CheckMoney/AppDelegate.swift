@@ -18,31 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     
     var googleSignInConfig: GIDConfiguration?
-    var accessToken: String = ""
-    var autoLoginEnabled: Bool = false
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         // 애플리케이션이 실행된 직후 사용자의 화면에 보여지기 직전에 호출
-        
-        // 자동 로그인 시도
-        
-        let refreshToken = UserDefaults.standard.string(forKey: "refresh_token")
-        print(refreshToken)
-        if (refreshToken != nil) {
-            NetworkHandler.sendPost(endpoint: "auth/refresh", request: LoginRefreshRequest(refresh_token: refreshToken!)) { (success, response: LoginRefreshResponse?) in
-                if success {
-                    self.accessToken = response!.access_token
-                    UserDefaults.standard.set(response!.refresh_token, forKey: "refresh_token")
-                    self.autoLoginEnabled = true
-                    print("accessToken: \(self.accessToken)")
-                } else {
-                    self.autoLoginEnabled = false
-                }
-            }
-        } else {
-            self.autoLoginEnabled = false
-        }
         
         googleSignInConfig = GIDConfiguration.init(
             clientID: "500159069581-el3csr571ui6mi1jugnqhicvfv61u17g.apps.googleusercontent.com",

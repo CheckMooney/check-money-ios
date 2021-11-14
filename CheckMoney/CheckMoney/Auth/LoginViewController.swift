@@ -34,7 +34,7 @@ class LoginViewController: UIViewController {
         }
         
         let emailLoginRequest = EmailLoginRequest(email: email, password: password)
-        NetworkHandler.sendPost(endpoint: "auth/login/email", request: emailLoginRequest) { (isSuccess, response: LoginResponse?) in
+        NetworkHandler.post(endpoint: "auth/login/email", request: emailLoginRequest) { (isSuccess, response: LoginResponse?) in
             guard isSuccess else {
                 if response == nil {
                     return
@@ -42,7 +42,7 @@ class LoginViewController: UIViewController {
                 print("login fail: \(response!.code), \(response!.message)")
                 return
             }
-            self.moveToMainView(accessToken: response!.access_token, refreshToken: response!.refresh_token)
+            self.moveToMainView(response: response!, email: self.emailTextField.text!)
         }
     }
     
@@ -57,7 +57,7 @@ class LoginViewController: UIViewController {
             let idToken = user?.authentication.idToken
             print("google Login Result: \(user?.profile?.name ?? " "), token: \(idToken ?? " ")")
             
-            NetworkHandler.sendPost(endpoint: "auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: LoginResponse?) in
+            NetworkHandler.post(endpoint: "auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: LoginResponse?) in
                 guard isSuccess == true else {
                     DispatchQueue.main.sync {
                         self.setLoadingIndicator(show: false)
@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
                     return
                 }
                 print("로그인 성공쓰")
-                self.moveToMainView(accessToken: response!.access_token, refreshToken: response!.refresh_token)
+                self.moveToMainView(response: response!, email: user?.profile?.email ?? "")
             }
         })
     }
@@ -80,9 +80,10 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func moveToMainView(accessToken: String, refreshToken: String) {
-        self.appDelegate.accessToken = accessToken
-        UserDefaults.standard.set(refreshToken, forKey: "refresh_token")
+    func moveToMainView(response: LoginResponse, email: String) {
+        UserData.accessToken = response.access_token
+        UserData.refreshToken = response.refresh_token
+        UserData.email = email
         
         DispatchQueue.main.sync {
             UIApplication.shared.windows.first!.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC")
