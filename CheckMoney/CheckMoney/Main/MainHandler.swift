@@ -11,15 +11,14 @@ import UIKit
 class MainHandler {
     private(set) static var category = ["식비", "쇼핑", "test1", "기타"]
     private(set) static var accounts = AccountCollection()
-    var currentAccountId: Int = 0
-    
+        
     init() {
         let group = DispatchGroup()
         let queue = DispatchQueue.global()
         
         group.enter()
         queue.async {
-            NetworkHandler.get(endpoint: "category") { (success, response: CategoryResponse?) in
+            NetworkHandler.request(method: .GET, endpoint: "category", request: EmptyRequest()) { (success, response: CategoryResponse?) in
                 guard success else {
                     group.leave()
                     return
@@ -35,7 +34,7 @@ class MainHandler {
         
         group.enter()
         queue.async {
-            NetworkHandler.get(endpoint: "accounts") { (success, response: AccountListResponse?) in
+            NetworkHandler.request(method: .GET, endpoint: "accounts", request: EmptyRequest()) { (success, response: AccountListResponse?) in
                 guard success else {
                     group.leave()
                     return
@@ -52,14 +51,12 @@ class MainHandler {
             print("group complete async")
             DispatchQueue.main.async {
                 let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
-                (rootVC?.viewControllers.first as? MainViewController)?.setViewData()
+                (rootVC?.viewControllers.first as? MainViewController)?.initViewData()
             }
         }
     }
     
     func getDefaultAccount() -> Account? {
-        return MainHandler.accounts.getDefaultAccount()?.1
+        return MainHandler.accounts.getDefaultAccount()
     }
-    
-    
 }

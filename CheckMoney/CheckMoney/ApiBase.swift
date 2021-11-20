@@ -17,6 +17,14 @@ protocol BaseResponse : Codable {
     var message: String {get}
 }
 
+struct EmptyRequest: BaseRequest {}
+
+struct DefaultResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+}
+
 struct AuthEmailRequest: BaseRequest {
     var email: String
 }
@@ -94,12 +102,36 @@ struct AccountListResponse: BaseResponse {
     var count: Int
 }
 
-struct AddAccountRequest: BaseRequest {
+struct AccountRequest: BaseRequest {
     var title: String
     var description: String
 }
 
 struct AddAccountResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+    var id: Int
+}
+
+protocol TransactionData: BaseRequest {
+    var is_consumption: Int {get}
+    var price: Int {get}
+    var detail: String {get}
+    var category: Int {get}
+    var date: String {get}
+}
+
+struct AddTransactionRequest: TransactionData {
+    var is_consumption: Int
+    var price: Int
+    var detail: String
+    var category: Int
+    var date: String
+    var account_id: Int
+}
+
+struct AddTransactionResponse: BaseResponse {
     var result: Bool
     var code: Int
     var message: String

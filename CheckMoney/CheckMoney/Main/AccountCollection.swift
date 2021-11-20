@@ -8,33 +8,46 @@
 import Foundation
 
 class AccountCollection {
-    typealias AccountDefine = (Int, Account)
-    private var accounts = Array<AccountDefine>()
+    private var allAccounts = Dictionary<Int, Account>()
     
     func addAccount(_ account: Account) {
-        accounts.append((account.id, account))
+        allAccounts[account.id] = account
+    }
+    
+    func deleteAccount(id: Int) {
+        allAccounts.removeValue(forKey: id)
     }
     
     func getCount() -> Int {
-        return accounts.count
+        return allAccounts.count
     }
     
-    func getDefaultAccount() -> AccountDefine? {
-        return accounts.first
+    func getDefaultAccount() -> Account? {
+        return getAllAccounts().first
     }
     
-    func getAccount(index: Int) -> Account? {
-        if (accounts.count <= index) {
-            return nil
-        }
-        return accounts[index].1
+    func getAccount(id: Int) -> Account? {
+        return allAccounts[id]
+    }
+    
+    func getAccount(title: String) -> Account? {
+        return allAccounts.first { (key: Int, value: Account) in
+            value.title == title
+        }?.value
+    }
+    
+    func getAllAccounts() -> Array<Account> {
+        return allAccounts.map {(val1: Int, val2: Account) -> Account in return val2}.sorted { $0.id < $1.id }
+    }
+    
+    func changeAccountData(id: Int, title: String, description: String) -> Account? {
+        allAccounts[id]?.title = title
+        allAccounts[id]?.description = description
+        
+        return allAccounts[id]
     }
     
     func getTitleList() -> Array<String> {
-        var list = Array<String>()
-        for account in accounts {
-            list.append(account.1.title)
-        }
-        return list
+        return getAllAccounts().map { account in return account.title }
     }
 }

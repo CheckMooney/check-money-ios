@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let refreshToken = UserData.refreshToken
         if (!refreshToken.isEmpty) {
-            NetworkHandler.post(endpoint: "auth/refresh", request: LoginRefreshRequest(refresh_token: refreshToken)) { (success, response: LoginRefreshResponse?) in
+            NetworkHandler.request(method: .POST, endpoint: "auth/refresh", request: LoginRefreshRequest(refresh_token: refreshToken)) { (success, response: LoginRefreshResponse?) in
                 if success {
                     UserData.accessToken = response!.access_token
                     UserData.refreshToken = response!.refresh_token

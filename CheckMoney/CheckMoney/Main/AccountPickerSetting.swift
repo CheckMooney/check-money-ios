@@ -1,5 +1,5 @@
 //
-//  WalletPickerSetting.swift
+//  AccountPickerSetting.swift
 //  CheckMoney
 //
 //  Created by SeungYeon Kim on 2021/11/14.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class WalletPickerSetting: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
+class AccountPickerSetting: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
     var textview: UITextField? = nil
     let walletList = MainHandler.accounts.getTitleList()
     

@@ -9,12 +9,13 @@ import Foundation
 import UIKit
 
 class CategoryPickerSetting: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
-    let pickerList = MainHandler.category
+    var pickerList = [String]()
     var pickerField: UITextField? = nil
     
     init(picker: inout UITextField) {
         self.pickerField = picker
-        print("!!!!!!! \(pickerList)")
+        self.pickerList.append("분류를 선택하세요.")
+        pickerList.append(contentsOf: MainHandler.category)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -32,6 +33,9 @@ class CategoryPickerSetting: NSObject, UIPickerViewDataSource, UIPickerViewDeleg
     
     // 피커뷰에서 선택시 호출
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if (row == 0) {
+            return
+        }
         pickerField?.text = pickerList[row]
     }
 }

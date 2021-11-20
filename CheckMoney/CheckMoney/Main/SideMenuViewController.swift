@@ -9,10 +9,11 @@ import Foundation
 import UIKit
 import SideMenu
 
-class SideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SideMenuViewController: UIViewController {
     @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var walletListView: UITableView!
     @IBOutlet weak var emailLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         emailLabel.text = UserData.email
@@ -34,8 +35,8 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
                 self.present(UIAlertController.init(title: nil, message: "지갑 이름을 추가해주세요.", preferredStyle: .alert), animated: true, completion: nil)
                 return
             }
-            let request = AddAccountRequest(title: title, description: alert.textFields?[1].text ?? "")
-            NetworkHandler.post(endpoint: "accounts", request: request) { (success, response: AddAccountResponse?) in
+            let request = AccountRequest(title: title, description: alert.textFields?[1].text ?? "")
+            NetworkHandler.request(method: .POST, endpoint: "accounts", request: request) { (success, response: AddAccountResponse?) in
                 guard success else {
                     print("fail to add Account")
                     return
@@ -52,7 +53,6 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: true, completion: nil)
     }
     
-    
     @IBAction func logoutButtonClicked(_ sender: Any) {
         let alert = UIAlertController(title: "로그아웃", message: "정말로 로그아웃 하시겠어요?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
@@ -62,7 +62,9 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
+}
+
+extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MainHandler.accounts.getCount()
     }
@@ -71,7 +73,14 @@ class SideMenuViewController: UIViewController, UITableViewDelegate, UITableView
         guard let cell = walletListView.dequeueReusableCell(withIdentifier: "tableview_cell") else {
             fatalError("not exist cell")
         }
-        cell.textLabel?.text = MainHandler.accounts.getAccount(index: indexPath.row)?.title ?? "empty name"
+        cell.textLabel?.text = MainHandler.accounts.getAllAccounts()[indexPath.row].title
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let account = MainHandler.accounts.getAllAccounts()[indexPath.row]
+        let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
+        (rootVC?.viewControllers.first as? MainViewController)?.activeAccount = account
+        self.dismiss(animated: true, completion: nil)
     }
 }

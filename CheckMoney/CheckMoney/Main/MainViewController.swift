@@ -11,31 +11,80 @@ import JJFloatingActionButton
 
 class MainViewController: UIViewController {
     let handler = MainHandler()
-    var activeWallet: Account? = nil
+    private var _activeAccount: Account? = nil
+    var activeAccount: Account? {
+        get { return _activeAccount }
+        set(value) {
+            _activeAccount = value
+            DispatchQueue.main.async {
+                self.walletName.text = value?.title
+            }
+        }
+    }
     
     @IBOutlet weak var walletName: UILabel!
     
     let buttonColor = UIColor(named: "AppColor") ?? UIColor.blue
     let actionButton = JJFloatingActionButton()
+    @IBOutlet weak var transactionTavleView: UITableView!
     
     override func viewDidLoad() {
         print("MainViewController load!")
         setFloatingButtons()
+        transactionTavleView.dataSource = self
+        transactionTavleView.delegate = self
     }
     
-    func setViewData() {
-        activeWallet = handler.getDefaultAccount()
-        walletName.text = activeWallet?.title
+    override func viewWillAppear(_ animated: Bool) {
+        //TODO: activeAccount 에 대한 데이터 가져오기
+    }
+    
+    func initViewData() {
+        activeAccount = MainHandler.accounts.getDefaultAccount()
     }
     
     @IBAction func walletSettingButtonClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "지갑 설정", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "수정", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: nil))
-        
+        let alert = UIAlertController(title: "계좌 설정", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "수정", style: .default, handler: {_ in
+            let innerAlert = UIAlertController(title: "계좌 소개 변경", message: "현재 이름: \(self.activeAccount?.title ?? "")", preferredStyle: .alert)
+            innerAlert.addTextField { titleField in
+                titleField.placeholder = "변경할 이름을 입력하세요."
+            }
+            innerAlert.addTextField { descriptionField in
+                descriptionField.text = self.activeAccount?.description
+                descriptionField.placeholder = "설명을 입력하세요."
+            }
+            innerAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            innerAlert.addAction(UIAlertAction(title: "변경", style: .default, handler: { action in
+                let title = innerAlert.textFields?[0].text ?? self.activeAccount?.title ?? ""
+                let desc = innerAlert.textFields?[1].text ?? ""
+                let putRequest = AccountRequest(title: title, description: desc)
+                NetworkHandler.request(method: .PUT, endpoint: "accounts/\(self.activeAccount!.id)", request: putRequest, callback: { (success, response: DefaultResponse?) in
+                    guard success else {
+                        return
+                    }
+                    self.activeAccount = MainHandler.accounts.changeAccountData(id: self.activeAccount!.id, title: title, description: desc)
+                })
+            }))
+            self.present(innerAlert, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "삭제", style: .destructive) { _ in
+            let innerAlert = UIAlertController(title: "\(self.activeAccount!.title) 삭제", message: "해당 계좌를 삭제하시겠습니까?", preferredStyle: .alert)
+            innerAlert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
+                NetworkHandler.request(method: .DELETE, endpoint: "accounts/\(self.activeAccount!.id)", request: EmptyRequest(), callback: {(success, response: DefaultResponse?) in
+                    guard success else {
+                        return
+                    }
+                    MainHandler.accounts.deleteAccount(id: self.activeAccount!.id)
+                    self.activeAccount = MainHandler.accounts.getDefaultAccount()
+                })
+            }))
+            innerAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            self.present(innerAlert, animated: true, completion: nil)
+        })
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
     
     func setFloatingButtons() {
         let item1 = actionButton.addItem(title: "지출", image: UIImage(systemName:"arrowshape.turn.up.forward")) { _ in
@@ -58,7 +107,20 @@ class MainViewController: UIViewController {
         let nextVC = self.storyboard?.instantiateViewController(identifier: "addTransactionVC") as? AddTransactionViewController
         nextVC?.modalTransitionStyle = .coverVertical
         nextVC?.isConsumption = isConsumption
+        nextVC?.accountName = self.activeAccount!.title
         
         self.present(nextVC!, animated: true, completion: nil)
     }
+}
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
+    }
+    
+    
 }

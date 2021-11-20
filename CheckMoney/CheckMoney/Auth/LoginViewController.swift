@@ -34,7 +34,7 @@ class LoginViewController: UIViewController {
         }
         
         let emailLoginRequest = EmailLoginRequest(email: email, password: password)
-        NetworkHandler.post(endpoint: "auth/login/email", request: emailLoginRequest) { (isSuccess, response: LoginResponse?) in
+        NetworkHandler.request(method: .POST, endpoint: "auth/login/email", request: emailLoginRequest) { (isSuccess, response: LoginResponse?) in
             guard isSuccess else {
                 if response == nil {
                     return
@@ -57,7 +57,7 @@ class LoginViewController: UIViewController {
             let idToken = user?.authentication.idToken
             print("google Login Result: \(user?.profile?.name ?? " "), token: \(idToken ?? " ")")
             
-            NetworkHandler.post(endpoint: "auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: LoginResponse?) in
+            NetworkHandler.request(method: .POST, endpoint: "auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: LoginResponse?) in
                 guard isSuccess == true else {
                     DispatchQueue.main.sync {
                         self.setLoadingIndicator(show: false)

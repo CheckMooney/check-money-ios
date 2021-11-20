@@ -7,10 +7,18 @@
 
 import Foundation
 
-struct Transaction {
-    var isConsumption: Bool
-    var price: Float
+class Transaction: Codable {
+    var is_consumption: Bool
+    var price: Int
     var detail: String
     var category: Int
     var date: String
+    
+    init(isConsumption: Bool, price: Int, detail: String, category: Int, date: String) {
+        self.is_consumption = isConsumption
+        self.price = price
+        self.detail = detail
+        self.category = category
+        self.date = date
+    }
 }

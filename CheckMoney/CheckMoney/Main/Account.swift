@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Account: Codable {
+struct Account: Codable, Hashable {
     var id: Int
     var title: String
     var description: String
