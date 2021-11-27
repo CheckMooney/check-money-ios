@@ -9,7 +9,7 @@ import UIKit
 import SwiftUI
 import JJFloatingActionButton
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UITabBarDelegate {
     let handler = MainHandler()
     private var _activeAccount: Account? = nil
     var activeAccount: Account? {
@@ -18,7 +18,19 @@ class MainViewController: UIViewController {
             _activeAccount = value
             DispatchQueue.main.async {
                 self.walletName.text = value?.title
+                if value != nil {
+                    self.handler.getTransactionData(account_id: value!.id)
+                }
             }
+        }
+    }
+    
+    private var _currentAccountTransaction = [Transaction]()
+    var currentAccountTransaction: [Transaction] {
+        get { return _currentAccountTransaction }
+        set(value) {
+            _currentAccountTransaction = value
+            self.setContainerViewController(id: self.tabBar.tag == 0 ? "TransactionListView" : "AnalyticsView", data: value)
         }
     }
     
@@ -26,20 +38,20 @@ class MainViewController: UIViewController {
     
     let buttonColor = UIColor(named: "AppColor") ?? UIColor.blue
     let actionButton = JJFloatingActionButton()
-    @IBOutlet weak var transactionTavleView: UITableView!
+    @IBOutlet weak var tabBar: UITabBar!
     
+    @IBOutlet weak var containerView: UIView!
     override func viewDidLoad() {
         print("MainViewController load!")
         setFloatingButtons()
-        transactionTavleView.dataSource = self
-        transactionTavleView.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        //TODO: activeAccount 에 대한 데이터 가져오기
+        
+        setContainerViewController(id: "TransactionListView")
+        tabBar.delegate = self
+        tabBar.selectedItem = tabBar.items?.first
     }
     
     func initViewData() {
+        print("init MainView")
         activeAccount = MainHandler.accounts.getDefaultAccount()
     }
     
@@ -101,6 +113,7 @@ class MainViewController: UIViewController {
         
         actionButton.buttonColor = buttonColor
         actionButton.display(inViewController: self)
+        self.view.addConstraint(NSLayoutConstraint(item: tabBar!, attribute: .top, relatedBy: .equal, toItem: actionButton, attribute: .bottom, multiplier: 1, constant: 12))
     }
     
     private func addNewTransaction(isConsumption: Bool) {
@@ -111,16 +124,22 @@ class MainViewController: UIViewController {
         
         self.present(nextVC!, animated: true, completion: nil)
     }
-}
-
-extension MainViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+    
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.tag == 0 {
+            setContainerViewController(id: "TransactionListView")
+        } else {
+            setContainerViewController(id: "AnalyticsView")
+        }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+    func setContainerViewController(id: String, data: [Transaction] = [Transaction]()) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let addViewController = storyboard.instantiateViewController(withIdentifier: id) as! ParentTabViewController
+        addViewController.transactionData = data
+        self.addChild(addViewController)
+        containerView.addSubview(addViewController.view)
+        addViewController.view.frame = containerView.bounds
+        addViewController.didMove(toParent: self)
     }
-    
-    
 }

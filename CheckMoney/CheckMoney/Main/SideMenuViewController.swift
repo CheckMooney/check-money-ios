@@ -12,10 +12,12 @@ import SideMenu
 class SideMenuViewController: UIViewController {
     @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var walletListView: UITableView!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameLabel.text = UserData.name
         emailLabel.text = UserData.email
         walletListView.delegate = self
         walletListView.dataSource = self

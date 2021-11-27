@@ -86,7 +86,8 @@ class AddTransactionViewController: UIViewController {
             return
         }
         let type = transactionType.selectedSegmentIndex
-        guard type == 1 && !categoryPicker.text!.isEmpty, let category = MainHandler.category.firstIndex(of:categoryPicker.text!) else {
+        let category = MainHandler.category.firstIndex(of:categoryPicker.text!) ?? 0
+        if type == 1 && (categoryPicker.text!.isEmpty || category == 0) {
             warningText.isHidden = false
             warningText.text = "분류를 선택해주세요."
             return
@@ -109,9 +110,16 @@ class AddTransactionViewController: UIViewController {
             }
             let alert = UIAlertController(title: nil, message: "거래 내역 생성이 완료되었습니다.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
-                self.navigationController?.popViewController(animated: true)
+                self.presentingViewController?.dismiss(animated: true, completion: {
+                    DispatchQueue.main.async {
+                        let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
+                        (rootVC?.viewControllers.first as? MainViewController)?.initViewData()
+                    }
+                })
             }))
-            self.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 }

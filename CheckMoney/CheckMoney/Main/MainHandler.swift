@@ -11,7 +11,10 @@ import UIKit
 class MainHandler {
     private(set) static var category = ["식비", "쇼핑", "test1", "기타"]
     private(set) static var accounts = AccountCollection()
-        
+    
+    static var year = Calendar.current.component(.year, from: Date())
+    static var month = Calendar.current.component(.month, from: Date())
+    
     init() {
         let group = DispatchGroup()
         let queue = DispatchQueue.global()
@@ -58,5 +61,34 @@ class MainHandler {
     
     func getDefaultAccount() -> Account? {
         return MainHandler.accounts.getDefaultAccount()
+    }
+    
+    func getTransactionData(account_id: Int) {
+        let group = DispatchGroup()
+        let queue = DispatchQueue.global()
+        
+        var transactions = [Transaction]()
+        
+        group.enter()
+        queue.async {
+            NetworkHandler.request(method: .GET, endpoint: "accounts/\(account_id)/transactions", request: EmptyRequest()) { (success, res: QueryTransactionResponse?) in
+                guard success else {
+                    print("fail to get transaction data")
+                    group.leave()
+                    return
+                }
+                
+                if let rows = res?.rows {
+                    transactions = rows
+                }
+                group.leave()
+            }
+        }
+        group.notify(queue: queue) {
+            DispatchQueue.main.async {
+                let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
+                (rootVC?.viewControllers.first as? MainViewController)?.currentAccountTransaction = transactions
+            }
+        }
     }
 }

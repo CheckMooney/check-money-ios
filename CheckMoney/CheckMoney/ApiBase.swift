@@ -67,24 +67,18 @@ struct EmailLoginRequest: BaseRequest {
     var password: String
 }
 
+struct LoginRefreshRequest: BaseRequest {
+    var refresh_token: String
+}
+
 struct LoginResponse: BaseResponse {
     var code: Int
     var message: String
     var result: Bool
     var access_token: String = ""
     var refresh_token: String = ""
-}
-
-struct LoginRefreshRequest: BaseRequest {
-    var refresh_token: String
-}
-
-struct LoginRefreshResponse: BaseResponse {
-    var result: Bool
-    var code: Int
-    var message: String
-    var access_token: String = ""
-    var refresh_token: String = ""
+    var user_id: Int
+    var name: String = ""
 }
 
 struct CategoryResponse: BaseResponse {
@@ -114,15 +108,7 @@ struct AddAccountResponse: BaseResponse {
     var id: Int
 }
 
-protocol TransactionData: BaseRequest {
-    var is_consumption: Int {get}
-    var price: Int {get}
-    var detail: String {get}
-    var category: Int {get}
-    var date: String {get}
-}
-
-struct AddTransactionRequest: TransactionData {
+struct AddTransactionRequest: BaseRequest {
     var is_consumption: Int
     var price: Int
     var detail: String
@@ -136,4 +122,12 @@ struct AddTransactionResponse: BaseResponse {
     var code: Int
     var message: String
     var id: Int
+}
+
+struct QueryTransactionResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+    var rows: [Transaction]
+    var count: Int
 }

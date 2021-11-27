@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
         print("loginViewController load")
         googleLoginButton.style = .wide
     }
-
+    
     @IBAction func emailLoginClicked(_ sender: Any) {
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
@@ -42,7 +42,9 @@ class LoginViewController: UIViewController {
                 print("login fail: \(response!.code), \(response!.message)")
                 return
             }
-            self.moveToMainView(response: response!, email: self.emailTextField.text!)
+            DispatchQueue.main.async {
+                self.moveToMainView(response: response!, email: self.emailTextField.text!)
+            }
         }
     }
     
@@ -58,14 +60,14 @@ class LoginViewController: UIViewController {
             print("google Login Result: \(user?.profile?.name ?? " "), token: \(idToken ?? " ")")
             
             NetworkHandler.request(method: .POST, endpoint: "auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: LoginResponse?) in
-                guard isSuccess == true else {
-                    DispatchQueue.main.sync {
+                DispatchQueue.main.async {
+                    guard isSuccess == true else {
                         self.setLoadingIndicator(show: false)
+                        return
                     }
-                    return
+                    print("로그인 성공쓰")
+                    self.moveToMainView(response: response!, email: user?.profile?.email ?? "")
                 }
-                print("로그인 성공쓰")
-                self.moveToMainView(response: response!, email: user?.profile?.email ?? "")
             }
         })
     }
@@ -84,9 +86,13 @@ class LoginViewController: UIViewController {
         UserData.accessToken = response.access_token
         UserData.refreshToken = response.refresh_token
         UserData.email = email
+        UserData.name = response.name
         
-        DispatchQueue.main.sync {
-            UIApplication.shared.windows.first!.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC")
+        DispatchQueue.main.async {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC")
+            let naviController = UINavigationController(rootViewController: vc)
+            naviController.isNavigationBarHidden = true
+            UIApplication.shared.windows.first!.rootViewController = naviController
         }
     }
 }
