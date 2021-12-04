@@ -45,59 +45,6 @@ class NetworkHandler {
         }
         sendRequest(&urlRequest, callback: callback)
     }
-//
-//    static func post<T, V>(endpoint: String, request: T, callback: @escaping responseClosure<V>) where T:BaseRequest, V:BaseResponse {
-//        guard let url = URL(string: baseUrl + endpoint) else {
-//            print("url is nil")
-//            callback(false, nil)
-//            return
-//        }
-//
-//        let encoder = JSONEncoder()
-//        let encodedData = try? encoder.encode(request)
-//
-//        guard encodedData != nil else {
-//            print("fail to encode")
-//            callback(false, nil)
-//            return
-//        }
-//        if let jsonData = encodedData, let jsonString = String(data: jsonData, encoding: .utf8) {
-//            print("requestBody: \(jsonString)")
-//        }
-//
-//        var urlRequest = URLRequest(url: url)
-//        urlRequest.httpMethod = "POST"
-//        print("Send POST Request: \(endpoint)")
-//        urlRequest.httpBody = encodedData
-//
-//        sendRequest(&urlRequest, callback: callback)
-//    }
-//
-//    static func get<T>(endpoint: String, callback: @escaping responseClosure<T>) where T: BaseResponse {
-//        guard let url = URL(string: baseUrl + endpoint) else {
-//            print("url is nil")
-//            callback(false, nil)
-//            return
-//        }
-//
-//        var urlRequest = URLRequest(url: url)
-//        urlRequest.httpMethod = "GET"
-//        print("Send GET Request: \(endpoint)")
-//        sendRequest(&urlRequest, callback: callback)
-//    }
-//
-//    static func put<T, V>(endpoint: String, request: T, callback: @escaping responseClosure<V>) where T: BaseRequest, V: BaseResponse {
-//        guard let url = URL(string: baseUrl + endpoint) else {
-//            print("url is nil")
-//            callback(false, nil)
-//            return
-//        }
-//
-//        var urlRequest = URLRequest(url: url)
-//        urlRequest.httpMethod = "PUT"
-//        print("Send PUT Request: \(endpoint)")
-//        sendRequest(&urlRequest, callback: callback)
-//    }
     
     static func sendRequest<V>(_ urlRequest: inout URLRequest, callback: @escaping responseClosure<V>) where V: BaseResponse {
         urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -114,6 +61,10 @@ class NetworkHandler {
                 return
             }
             print("\(response!.url!) statusCode is \((response as? HTTPURLResponse)?.statusCode ?? 0)")
+            
+            if (response as? HTTPURLResponse)?.statusCode == 403 {
+                MainHandler.refreshAccessToken()
+            }
             
             let decoder = JSONDecoder()
             let decodedData = try? decoder.decode(V.self, from: data)

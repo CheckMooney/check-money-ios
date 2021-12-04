@@ -15,7 +15,6 @@ class TransactionListTabViewController: ParentTabViewController, UITableViewDele
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalLabel: UILabel!
     
-    @IBOutlet weak var datePickerView: UIPickerView!
     var pickerviewSetting = TransactionDatePickerSetting()
     private let toolbar = UIToolbar()
     
@@ -27,10 +26,12 @@ class TransactionListTabViewController: ParentTabViewController, UITableViewDele
         set(value) {
             _filteredData = value
             self.tableView.reloadData()
+            updateTotalLabel(transaction: _filteredData)
         }
     }
     
     override func viewDidLoad() {
+        categorizingType = .all
         naviItem.title = "\(MainHandler.year)년 \(MainHandler.month)월"
         tableView.dataSource = self
         tableView.delegate = self
@@ -156,30 +157,53 @@ class TransactionListTabViewController: ParentTabViewController, UITableViewDele
         pickerView.delegate = pickerviewSetting
         pickerView.dataSource = pickerviewSetting
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "이동", style: .default, handler: { _ in
+            MainHandler.month = pickerView.selectedRow(inComponent: 1) + 1
+            MainHandler.year = Calendar.current.component(.year, from: Date()) - pickerView.numberOfRows(inComponent: 0) + pickerView.selectedRow(inComponent: 0) + 1
+            DispatchQueue.main.async {
+                self.viewDidLoad()
+            }
+        }))
+        pickerView.selectRow(pickerviewSetting.yearList.count - 1, inComponent: 0, animated: true)
+        pickerView.selectRow(MainHandler.month - 1, inComponent: 1, animated: true)
         self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func onCancelButtonTapped() {
-        toolbar.removeFromSuperview()
-        datePickerView.isHidden = true
+    func updateTotalLabel(transaction: [(Int, [Transaction])]) {
+        DispatchQueue.main.async {
+            var sum: Int = 0
+            for trans in transaction {
+                for data in trans.1 {
+                    if data.is_consumption == 1 {
+                        sum -= data.price
+                    } else {
+                        sum += data.price
+                    }
+                }
+            }
+            self.totalLabel.text = String(sum) + "원"
+        }
     }
     
-    @objc func onDoneButtonTapped() {
-        let currentYear = MainHandler.year
-        let currentMonth = MainHandler.month
-        let newMonth = datePickerView.selectedRow(inComponent: 1) + 1
-        let newYear = Calendar.current.component(.year, from: Date()) - datePickerView.numberOfRows(inComponent: 0) + datePickerView.selectedRow(inComponent: 0) + 1
-        
-        if currentYear != newYear || currentMonth != newMonth {
-            MainHandler.year = newYear
-            MainHandler.month = newMonth
-            filteredData = TransactionHandler.filter(data: transactionData, year: newYear, month: newMonth)
-            
-            categorizingType = .all
-            addMenuForCategorizingType()
+    @IBAction func preDateButtonClicked(_ sender: Any) {
+        let month = MainHandler.month
+        if (month - 1 == 0) {
+            MainHandler.year -= 1
+            MainHandler.month = 12
+        } else {
+            MainHandler.month -= 1
         }
-        toolbar.removeFromSuperview()
-        datePickerView.isHidden = true
+        viewDidLoad()
+    }
+    @IBAction func postDateButtonClicked(_ sender: Any) {
+        let month = MainHandler.month
+        if (month + 1 == 13) {
+            MainHandler.year += 1
+            MainHandler.month = 1
+        } else {
+            MainHandler.month += 1
+        }
+        viewDidLoad()
     }
 }
 

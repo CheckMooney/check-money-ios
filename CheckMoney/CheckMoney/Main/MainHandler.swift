@@ -91,4 +91,13 @@ class MainHandler {
             }
         }
     }
+    
+    static func refreshAccessToken() {
+        NetworkHandler.request(method: .POST, endpoint: "auth/refresh", request: LoginRefreshRequest(refresh_token: UserData.refreshToken)) { (success, response: LoginResponse?) in
+            if success, let accessToken = response?.access_token {
+                UserData.accessToken = accessToken
+                print("access token 갱신 완료")
+            }
+        }
+    }
 }
