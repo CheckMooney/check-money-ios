@@ -16,6 +16,7 @@ class MainViewController: UIViewController, UITabBarDelegate {
         get { return _activeAccount }
         set(value) {
             _activeAccount = value
+            self.tabBar.selectedItem = tabBar.items?.first
             DispatchQueue.main.async {
                 self.walletName.text = value?.title
                 if value != nil {
@@ -30,7 +31,7 @@ class MainViewController: UIViewController, UITabBarDelegate {
         get { return _currentAccountTransaction }
         set(value) {
             _currentAccountTransaction = value
-            self.setContainerViewController(self.tabBar.tag == 0 ? TabViewList.Analytics : TabViewList.TransactionList, data: value)
+            self.setContainerViewController(self.tabBar.selectedItem?.tag == 0 ? TabViewList.Analytics : TabViewList.TransactionList, data: value)
         }
     }
     
@@ -54,6 +55,10 @@ class MainViewController: UIViewController, UITabBarDelegate {
     func initViewData() {
         print("init MainView")
         activeAccount = MainHandler.accounts.getDefaultAccount()
+    }
+    
+    func updateTransactionData() {
+        self.handler.getTransactionData(account_id: activeAccount!.id)
     }
     
     @IBAction func walletSettingButtonClicked(_ sender: Any) {
@@ -128,9 +133,9 @@ class MainViewController: UIViewController, UITabBarDelegate {
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 0 {
-            setContainerViewController(TabViewList.Analytics)
+            setContainerViewController(TabViewList.Analytics, data: currentAccountTransaction)
         } else {
-            setContainerViewController(TabViewList.TransactionList)
+            setContainerViewController(TabViewList.TransactionList, data: currentAccountTransaction)
         }
     }
     

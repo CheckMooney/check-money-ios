@@ -97,7 +97,7 @@ class AddTransactionViewController: UIViewController {
             warningText.text = "계좌 아이디를 가져오는데 문제가 생겼습니다."
             return
         }
-
+        
         warningText.isHidden = true
         let dateFommatter = DateFormatter()
         dateFommatter.dateFormat = "yyyy-MM-dd"
@@ -108,16 +108,16 @@ class AddTransactionViewController: UIViewController {
             guard success else {
                 return
             }
-            let alert = UIAlertController(title: nil, message: "거래 내역 생성이 완료되었습니다.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
-                self.presentingViewController?.dismiss(animated: true, completion: {
-                    DispatchQueue.main.async {
-                        let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
-                        (rootVC?.viewControllers.first as? MainViewController)?.initViewData()
-                    }
-                })
-            }))
             DispatchQueue.main.async {
+                let alert = UIAlertController(title: nil, message: "거래 내역 생성이 완료되었습니다.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
+                    self.presentingViewController?.dismiss(animated: true, completion: {
+                        DispatchQueue.main.async {
+                            let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
+                            (rootVC?.viewControllers.first as? MainViewController)?.updateTransactionData()
+                        }
+                    })
+                }))
                 self.present(alert, animated: true, completion: nil)
             }
         }

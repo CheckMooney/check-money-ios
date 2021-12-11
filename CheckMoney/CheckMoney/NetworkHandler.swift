@@ -16,17 +16,25 @@ class NetworkHandler {
         case POST, GET, PUT, DELETE
     }
     
-    static func request<T, V>(method: MethodList, endpoint: String, request: T, callback: @escaping responseClosure<V>) where T:BaseRequest, V:BaseResponse {
-        guard let url = URL(string: baseUrl + endpoint) else {
+    static func request<T, V>(method: MethodList, endpoint: String, request: T, parameters: [String: String]? = nil, callback: @escaping responseClosure<V>) where T:BaseRequest, V:BaseResponse {
+        guard var component = URLComponents(string: baseUrl + endpoint) else {
             print("url is nil")
             callback(false, nil)
             return
         }
         
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = method.rawValue
-        print("Send \(method.rawValue) Request: \(endpoint)")
+        if parameters != nil {
+            var queryItems = [URLQueryItem]()
+            for (name, value) in parameters! {
+                if name.isEmpty { continue }
+                queryItems.append(URLQueryItem(name: name, value: value))
+            }
+            component.queryItems = queryItems
+        }
         
+        var urlRequest = URLRequest(url: component.url ?? URL(string: baseUrl + endpoint)!)
+        urlRequest.httpMethod = method.rawValue
+        print("Send \(method.rawValue) Request: \(urlRequest.url)")
         switch method {
         case .GET: break
         default:

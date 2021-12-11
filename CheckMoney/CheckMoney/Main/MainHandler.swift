@@ -63,7 +63,7 @@ class MainHandler {
         return MainHandler.accounts.getDefaultAccount()
     }
     
-    func getTransactionData(account_id: Int) {
+    func getTransactionData(account_id: Int, year: Int = 0, month: Int = 0, day: Int = 0) {
         let group = DispatchGroup()
         let queue = DispatchQueue.global()
         
@@ -71,7 +71,22 @@ class MainHandler {
         
         group.enter()
         queue.async {
-            NetworkHandler.request(method: .GET, endpoint: "accounts/\(account_id)/transactions", request: EmptyRequest()) { (success, res: QueryTransactionResponse?) in
+            var queryParams = ["page":"1", "limit":"10000"]
+            var dateFormat = ""
+            if year != 0 {
+                dateFormat += String(year)
+                if month != 0 {
+                    dateFormat += "-\((month / 10 == 1) ? "" : "0")\(month)"
+                    if day != 0 {
+                        dateFormat += "-\(day / 10)\(day % 10)"
+                    }
+                }
+            }
+            if !dateFormat.isEmpty {
+                print(dateFormat)
+                queryParams["date"] = dateFormat
+            }
+            NetworkHandler.request(method: .GET, endpoint: "accounts/\(account_id)/transactions", request: EmptyRequest(), parameters: queryParams) { (success, res: QueryTransactionResponse?) in
                 guard success else {
                     print("fail to get transaction data")
                     group.leave()
