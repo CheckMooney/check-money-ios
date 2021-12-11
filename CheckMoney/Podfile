@@ -9,4 +9,5 @@ target 'CheckMoney' do
   pod 'GoogleSignIn'
   pod 'JJFloatingActionButton'
   pod 'SideMenu'
+  pod 'Charts'
 end

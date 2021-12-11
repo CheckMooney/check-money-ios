@@ -30,11 +30,12 @@ class MainViewController: UIViewController, UITabBarDelegate {
         get { return _currentAccountTransaction }
         set(value) {
             _currentAccountTransaction = value
-            self.setContainerViewController(id: self.tabBar.tag == 0 ? "TransactionListView" : "AnalyticsView", data: value)
+            self.setContainerViewController(self.tabBar.tag == 0 ? TabViewList.Analytics : TabViewList.TransactionList, data: value)
         }
     }
     
     @IBOutlet weak var walletName: UILabel!
+    @IBOutlet weak var walletSettingButton: UIButton!
     
     let buttonColor = UIColor(named: "AppColor") ?? UIColor.blue
     let actionButton = JJFloatingActionButton()
@@ -45,7 +46,7 @@ class MainViewController: UIViewController, UITabBarDelegate {
         print("MainViewController load!")
         setFloatingButtons()
         
-        setContainerViewController(id: "TransactionListView")
+//        setContainerViewController(TabViewList.Analytics)
         tabBar.delegate = self
         tabBar.selectedItem = tabBar.items?.first
     }
@@ -127,19 +128,32 @@ class MainViewController: UIViewController, UITabBarDelegate {
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.tag == 0 {
-            setContainerViewController(id: "TransactionListView")
+            setContainerViewController(TabViewList.Analytics)
         } else {
-            setContainerViewController(id: "AnalyticsView")
+            setContainerViewController(TabViewList.TransactionList)
         }
     }
     
-    func setContainerViewController(id: String, data: [Transaction] = [Transaction]()) {
+    func setContainerViewController(_ view: TabViewList, data: [Transaction] = [Transaction]()) {
+//        switch view {
+//        case .Analytics:
+//            self.walletName.isHidden = true
+//            self.walletSettingButton.isHidden = true
+//        case .TransactionList:
+//            self.walletName.isHidden = false
+//            self.walletSettingButton.isHidden = false
+//        }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let addViewController = storyboard.instantiateViewController(withIdentifier: id) as! ParentTabViewController
+        let addViewController = storyboard.instantiateViewController(withIdentifier: view.rawValue) as! ParentTabViewController
         addViewController.transactionData = data
         self.addChild(addViewController)
         containerView.addSubview(addViewController.view)
         addViewController.view.frame = containerView.bounds
         addViewController.didMove(toParent: self)
     }
+}
+
+enum TabViewList: String {
+    case Analytics = "AnalyticsView"
+    case TransactionList = "TransactionListView"
 }

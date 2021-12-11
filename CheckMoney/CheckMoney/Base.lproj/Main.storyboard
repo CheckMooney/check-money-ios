@@ -377,8 +377,8 @@
                                     <constraint firstAttribute="height" constant="83" id="9xB-GY-yru"/>
                                 </constraints>
                                 <items>
-                                    <tabBarItem title="List" image="list.star" catalog="system" id="CP0-M6-qak"/>
-                                    <tabBarItem tag="1" title="Analytics" image="book" catalog="system" id="heY-Hw-XyU"/>
+                                    <tabBarItem title="Analytics" image="book" catalog="system" id="heY-Hw-XyU"/>
+                                    <tabBarItem tag="1" title="List" image="list.star" catalog="system" id="CP0-M6-qak"/>
                                 </items>
                                 <color key="selectedImageTintColor" red="0.0" green="0.39221018549999997" blue="0.99987608189999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tabBar>
@@ -410,6 +410,7 @@
                         <outlet property="containerView" destination="Ycf-U2-vh7" id="jfZ-CO-8RY"/>
                         <outlet property="tabBar" destination="9su-EX-da8" id="YYr-KO-kXB"/>
                         <outlet property="walletName" destination="RF0-qV-SXc" id="aRN-8O-k1f"/>
+                        <outlet property="walletSettingButton" destination="ct3-kq-lyw" id="oXa-oE-6qx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6O0-Zo-Ecs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1448,9 +1449,24 @@
                     <view key="view" contentMode="scaleToFill" id="yqs-eF-Hr0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eet-3L-MwN" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="10" y="94" width="355" height="634"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="jmh-bw-Ui5"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jmh-bw-Ui5" firstAttribute="trailing" secondItem="eet-3L-MwN" secondAttribute="trailing" constant="10" id="0QZ-ig-OuU"/>
+                            <constraint firstItem="eet-3L-MwN" firstAttribute="leading" secondItem="jmh-bw-Ui5" secondAttribute="leading" constant="10" id="ZEa-V0-5Tm"/>
+                            <constraint firstItem="eet-3L-MwN" firstAttribute="top" secondItem="jmh-bw-Ui5" secondAttribute="top" constant="50" id="iLq-Sm-diD"/>
+                            <constraint firstItem="jmh-bw-Ui5" firstAttribute="bottom" secondItem="eet-3L-MwN" secondAttribute="bottom" constant="50" id="kvw-m5-g0J"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="chartView" destination="eet-3L-MwN" id="IxJ-PR-M18"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gA9-fN-rl1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

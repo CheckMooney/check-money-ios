@@ -4,6 +4,9 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
   - GoogleSignIn (6.0.2):
     - AppAuth (~> 1.4)
     - GTMAppAuth (~> 1.0)
@@ -16,6 +19,7 @@ PODS:
   - SideMenu (6.5.0)
 
 DEPENDENCIES:
+  - Charts
   - GoogleSignIn
   - JJFloatingActionButton
   - SideMenu
@@ -23,6 +27,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - Charts
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
@@ -31,12 +36,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
 
-PODFILE CHECKSUM: c45f4c59e21d8b93b622ac686debc06e13bdd0f7
+PODFILE CHECKSUM: 41bee5a93ffe208ad80c3f109d30ce130de4a541
 
 COCOAPODS: 1.10.1
