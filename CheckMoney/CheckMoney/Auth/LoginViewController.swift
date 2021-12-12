@@ -35,14 +35,18 @@ class LoginViewController: UIViewController {
         
         let emailLoginRequest = EmailLoginRequest(email: email, password: password)
         NetworkHandler.request(method: .POST, endpoint: "auth/login/email", request: emailLoginRequest) { (isSuccess, response: LoginResponse?) in
-            guard isSuccess else {
-                if response == nil {
+            DispatchQueue.main.async {
+                guard isSuccess else {
+                    if response == nil {
+                        return
+                    }
+                    print("login fail: \(response!.code), \(response!.message)")
+                    let alert = UIAlertController(title: "로그인 실패", message: "\(response!.message) (\(response!.code))", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                     return
                 }
-                print("login fail: \(response!.code), \(response!.message)")
-                return
-            }
-            DispatchQueue.main.async {
+                
                 self.moveToMainView(response: response!, email: self.emailTextField.text!)
             }
         }

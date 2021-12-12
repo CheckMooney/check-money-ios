@@ -718,6 +718,9 @@
                                 <state key="normal">
                                     <imageReference key="image" image="gearshape" catalog="system" symbolScale="large"/>
                                 </state>
+                                <connections>
+                                    <segue destination="adf-ap-mLM" kind="show" id="gcr-Rk-AtY"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asdfg123@asdf.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7g-4e-AIc" userLabel="email">
                                 <rect key="frame" x="15" y="100" width="139.33333333333334" height="18"/>
@@ -804,6 +807,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfU-Ny-jqm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1052" y="1623"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="KQy-fv-bj0">
+            <objects>
+                <viewController id="adf-ap-mLM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0z4-dc-mKF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="NvN-Jp-CaW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="uNf-2j-gtw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wMh-CP-isB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-244" y="1641"/>
         </scene>
         <!--아이디 / 비밀번호 찾기-->
         <scene sceneID="wkF-zh-7It">
@@ -1021,6 +1040,7 @@
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.24621430450000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="Mxx-xi-CMC" firstAttribute="centerY" secondItem="G9w-8j-ZfU" secondAttribute="centerY" id="EUB-TV-h3k"/>
                                     <constraint firstItem="Mxx-xi-CMC" firstAttribute="centerX" secondItem="G9w-8j-ZfU" secondAttribute="centerX" id="MXD-id-WrK"/>

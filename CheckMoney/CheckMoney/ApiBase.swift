@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BetterCodable
 
 protocol BaseRequest : Codable {
     
@@ -24,6 +25,16 @@ struct DefaultResponse: BaseResponse {
     var code: Int
     var message: String
 }
+
+struct DefaultEmptyStringStrategy: DefaultCodableStrategy {
+    static var defaultValue: String { return "" }
+}
+typealias DefaultEmptyString = DefaultCodable<DefaultEmptyStringStrategy>
+
+struct DefaultIntStrategy: DefaultCodableStrategy {
+    static var defaultValue: Int { return 0 }
+}
+typealias DefaultInt = DefaultCodable<DefaultIntStrategy>
 
 struct AuthEmailRequest: BaseRequest {
     var email: String
@@ -75,10 +86,10 @@ struct LoginResponse: BaseResponse {
     var code: Int
     var message: String
     var result: Bool
-    var access_token: String = ""
-    var refresh_token: String = ""
-    var user_id: Int
-    var name: String = ""
+    @DefaultEmptyString var access_token: String = ""
+    @DefaultEmptyString var refresh_token: String = ""
+    @DefaultInt var user_id: Int
+    @DefaultEmptyString var name: String = ""
 }
 
 struct CategoryResponse: BaseResponse {

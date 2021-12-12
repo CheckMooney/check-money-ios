@@ -4,6 +4,7 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - BetterCodable (0.1.0)
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
@@ -19,6 +20,7 @@ PODS:
   - SideMenu (6.5.0)
 
 DEPENDENCIES:
+  - BetterCodable (~> 0.1.0)
   - Charts
   - GoogleSignIn
   - JJFloatingActionButton
@@ -27,6 +29,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - BetterCodable
     - Charts
     - GoogleSignIn
     - GTMAppAuth
@@ -36,6 +39,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  BetterCodable: 4f8f68b97856ed62612d8f5d987ed5ce2627172a
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
@@ -43,6 +47,6 @@ SPEC CHECKSUMS:
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
 
-PODFILE CHECKSUM: 41bee5a93ffe208ad80c3f109d30ce130de4a541
+PODFILE CHECKSUM: da4a6bb3efa30531f67497ff1ec6e94068b7f771
 
 COCOAPODS: 1.10.1

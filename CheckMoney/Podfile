@@ -10,4 +10,5 @@ target 'CheckMoney' do
   pod 'JJFloatingActionButton'
   pod 'SideMenu'
   pod 'Charts'
+  pod 'BetterCodable', '~>0.1.0'
 end

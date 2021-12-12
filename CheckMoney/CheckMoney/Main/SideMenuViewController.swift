@@ -58,7 +58,9 @@ class SideMenuViewController: UIViewController {
     @IBAction func logoutButtonClicked(_ sender: Any) {
         let alert = UIAlertController(title: "로그아웃", message: "정말로 로그아웃 하시겠어요?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-            UIApplication.shared.windows.first!.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC")
+            let naviController = UINavigationController(rootViewController: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC"))
+            naviController.isNavigationBarHidden = true
+            UIApplication.shared.windows.first!.rootViewController = naviController
             UserData.reset()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
