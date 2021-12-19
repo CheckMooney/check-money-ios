@@ -34,7 +34,7 @@ class LoginViewController: UIViewController {
         }
         
         let emailLoginRequest = EmailLoginRequest(email: email, password: password)
-        NetworkHandler.request(method: .POST, endpoint: "auth/login/email", request: emailLoginRequest) { (isSuccess, response: LoginResponse?) in
+        NetworkHandler.request(method: .POST, endpoint: "/auth/login/email", request: emailLoginRequest) { (isSuccess, response: LoginResponse?) in
             DispatchQueue.main.async {
                 guard isSuccess else {
                     if response == nil {
@@ -63,7 +63,7 @@ class LoginViewController: UIViewController {
             let idToken = user?.authentication.idToken
             print("google Login Result: \(user?.profile?.name ?? " "), token: \(idToken ?? " ")")
             
-            NetworkHandler.request(method: .POST, endpoint: "auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: LoginResponse?) in
+            NetworkHandler.request(method: .POST, endpoint: "/auth/login/google", request: GoogleLoginRequest(id_token: idToken ?? "")) { (isSuccess, response: LoginResponse?) in
                 DispatchQueue.main.async {
                     guard isSuccess == true else {
                         self.setLoadingIndicator(show: false)
@@ -96,6 +96,7 @@ class LoginViewController: UIViewController {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainVC")
             let naviController = UINavigationController(rootViewController: vc)
             naviController.isNavigationBarHidden = true
+            naviController.interactivePopGestureRecognizer?.delegate = nil
             UIApplication.shared.windows.first!.rootViewController = naviController
         }
     }

@@ -104,7 +104,7 @@ class AddTransactionViewController: UIViewController {
         let dateStr = dateFommatter.string(from: datePicker.date)
         let transaction = AddTransactionRequest(is_consumption: type, price: price, detail: explain, category: category, date: dateStr, account_id: accountId)
         
-        NetworkHandler.request(method: .POST, endpoint: "transactions", request: transaction) { (success, res: AddTransactionResponse?) in
+        NetworkHandler.request(method: .POST, endpoint: "/transactions", request: transaction) { (success, res: AddTransactionResponse?) in
             guard success else {
                 return
             }

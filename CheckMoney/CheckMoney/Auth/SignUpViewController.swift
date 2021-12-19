@@ -34,7 +34,7 @@ class SignUpViewController: UIViewController {
             loadingView.isHidden = false
             
             let requestData = AuthEmailRequest(email: emailTextField.text!)
-            NetworkHandler.request(method: .POST, endpoint: "auth/request/email", request: requestData) { (success, response: AuthEmailResponse?) in
+            NetworkHandler.request(method: .POST, endpoint: "/auth/request/email", request: requestData) { (success, response: AuthEmailResponse?) in
                 DispatchQueue.main.sync {
                     print("Callback:: \(success), \(String(describing: response))")
                     self.loadingView.isHidden = true
@@ -64,7 +64,7 @@ class SignUpViewController: UIViewController {
             wrongNumText.isHidden = true
             let requestData = AuthConfirmCodeRequest(email: email, auth_num: code)
             
-            NetworkHandler.request(method: .POST, endpoint: "auth/confirm", request: requestData, callback: {(success, response: AuthConfirmCodeResponse?) in
+            NetworkHandler.request(method: .POST, endpoint: "/auth/confirm", request: requestData, callback: {(success, response: AuthConfirmCodeResponse?) in
                 DispatchQueue.main.sync {
                     self.loadingView.isHidden = true
                     

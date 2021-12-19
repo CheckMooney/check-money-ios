@@ -59,6 +59,16 @@ class UserData {
         }
     }
     
+    static private var _imageUrl = ""
+    static var profileImageUrl: String {
+        get {
+            return _imageUrl.isEmpty ? _imageUrl : (NetworkHandler.baseUrl + _imageUrl)
+        }
+        set {
+            _imageUrl = newValue
+        }
+    }
+    
     static func reset() {
         refreshToken = ""
         accessToken = ""

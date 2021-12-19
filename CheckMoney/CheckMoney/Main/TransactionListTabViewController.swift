@@ -87,7 +87,7 @@ class TransactionListTabViewController: ParentTabViewController, UITableViewDele
                     return
                 }
                 let req = AddTransactionRequest(is_consumption: selectedData.is_consumption, price: newPrice, detail: newDetail, category: selectedData.category, date: selectedData.date, account_id: selectedData.account_id)
-                NetworkHandler.request(method: .PUT, endpoint: "transactions/\(selectedData.id)", request: req) { (success, response: DefaultResponse?) in
+                NetworkHandler.request(method: .PUT, endpoint: "/transactions/\(selectedData.id)", request: req) { (success, response: DefaultResponse?) in
                     guard success else {
                         return
                     }
@@ -102,7 +102,7 @@ class TransactionListTabViewController: ParentTabViewController, UITableViewDele
         elements.append(UIAction(title: "삭제", attributes: .destructive ,handler: { _ in
             let alert = UIAlertController(title: "'\(selectedData.detail)' 삭제", message: "거래 내역을 삭제하시겠습니까?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
-                NetworkHandler.request(method: .DELETE, endpoint: "transactions/\(selectedData.id)", request: EmptyRequest()) { (success, response: DefaultResponse?) in
+                NetworkHandler.request(method: .DELETE, endpoint: "/transactions/\(selectedData.id)", request: EmptyRequest()) { (success, response: DefaultResponse?) in
                     guard success else {
                         print("거래 내역 제거 실패")
                         return

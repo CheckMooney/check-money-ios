@@ -11,4 +11,5 @@ target 'CheckMoney' do
   pod 'SideMenu'
   pod 'Charts'
   pod 'BetterCodable', '~>0.1.0'
+  pod 'Kingfisher', '~> 7.0'
 end

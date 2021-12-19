@@ -8,12 +8,14 @@
 import Foundation
 import UIKit
 import SideMenu
+import Kingfisher
 
 class SideMenuViewController: UIViewController {
     @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var walletListView: UITableView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var profileImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +23,12 @@ class SideMenuViewController: UIViewController {
         emailLabel.text = UserData.email
         walletListView.delegate = self
         walletListView.dataSource = self
+        if !UserData.profileImageUrl.isEmpty {
+            profileImageView.kf.indicatorType = .activity
+            profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
+            profileImageView.layer.borderWidth = 1
+            profileImageView.kf.setImage(with: URL(string: UserData.profileImageUrl))
+        }
     }
     
     @IBAction func addWalletButtonClicked(_ sender: Any) {
@@ -38,7 +46,7 @@ class SideMenuViewController: UIViewController {
                 return
             }
             let request = AccountRequest(title: title, description: alert.textFields?[1].text ?? "")
-            NetworkHandler.request(method: .POST, endpoint: "accounts", request: request) { (success, response: AddAccountResponse?) in
+            NetworkHandler.request(method: .POST, endpoint: "/accounts", request: request) { (success, response: AddAccountResponse?) in
                 guard success else {
                     print("fail to add Account")
                     return
@@ -60,6 +68,7 @@ class SideMenuViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
             let naviController = UINavigationController(rootViewController: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC"))
             naviController.isNavigationBarHidden = true
+            naviController.interactivePopGestureRecognizer?.delegate = nil
             UIApplication.shared.windows.first!.rootViewController = naviController
             UserData.reset()
         }))

@@ -17,6 +17,7 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
   - JJFloatingActionButton (2.5.0)
+  - Kingfisher (7.1.2)
   - SideMenu (6.5.0)
 
 DEPENDENCIES:
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - Charts
   - GoogleSignIn
   - JJFloatingActionButton
+  - Kingfisher (~> 7.0)
   - SideMenu
 
 SPEC REPOS:
@@ -35,6 +37,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - JJFloatingActionButton
+    - Kingfisher
     - SideMenu
 
 SPEC CHECKSUMS:
@@ -45,8 +48,9 @@ SPEC CHECKSUMS:
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
+  Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
 
-PODFILE CHECKSUM: da4a6bb3efa30531f67497ff1ec6e94068b7f771
+PODFILE CHECKSUM: 06e716325e0dc6d16c7e5699e13e5ec991db3299
 
 COCOAPODS: 1.10.1

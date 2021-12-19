@@ -142,3 +142,28 @@ struct QueryTransactionResponse: BaseResponse {
     var rows: [Transaction]
     var count: Int
 }
+
+struct UserInfoResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+    var id: Int
+    var email: String
+    var name: String
+    @DefaultEmptyString var img_url: String
+    @DefaultEmptyString var provider: String
+}
+
+struct PutMyInfoRequest: BaseRequest {
+    var img_url: String?
+    var name: String?
+    var password: String?
+    var new_password: String?
+}
+
+struct UploadImgResponse: BaseResponse {
+    var result: Bool
+    var code: Int
+    var message: String
+    @DefaultEmptyString var url: String
+}

@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let refreshToken = UserData.refreshToken
         if (!refreshToken.isEmpty) {
-            NetworkHandler.request(method: .POST, endpoint: "auth/refresh", request: LoginRefreshRequest(refresh_token: refreshToken)) { (success, response: LoginResponse?) in
+            NetworkHandler.request(method: .POST, endpoint: "/auth/refresh", request: LoginRefreshRequest(refresh_token: refreshToken)) { (success, response: LoginResponse?) in
                 if success {
                     UserData.accessToken = response!.access_token
                     UserData.refreshToken = response!.refresh_token
@@ -41,6 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let vc = canAutoLogin ? storyboard.instantiateViewController(withIdentifier: "MainVC") : storyboard.instantiateViewController(withIdentifier: "LoginVC")
             let naviController = UINavigationController(rootViewController: vc)
             naviController.isNavigationBarHidden = true
+            naviController.interactivePopGestureRecognizer?.delegate = nil
             self.window?.rootViewController = naviController
         }
     }

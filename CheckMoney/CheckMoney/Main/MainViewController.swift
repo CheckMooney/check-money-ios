@@ -77,7 +77,7 @@ class MainViewController: UIViewController, UITabBarDelegate {
                 let title = innerAlert.textFields?[0].text ?? self.activeAccount?.title ?? ""
                 let desc = innerAlert.textFields?[1].text ?? ""
                 let putRequest = AccountRequest(title: title, description: desc)
-                NetworkHandler.request(method: .PUT, endpoint: "accounts/\(self.activeAccount!.id)", request: putRequest, callback: { (success, response: DefaultResponse?) in
+                NetworkHandler.request(method: .PUT, endpoint: "/accounts/\(self.activeAccount!.id)", request: putRequest, callback: { (success, response: DefaultResponse?) in
                     guard success else {
                         return
                     }
@@ -89,7 +89,7 @@ class MainViewController: UIViewController, UITabBarDelegate {
         alert.addAction(UIAlertAction(title: "삭제", style: .destructive) { _ in
             let innerAlert = UIAlertController(title: "\(self.activeAccount!.title) 삭제", message: "해당 계좌를 삭제하시겠습니까?", preferredStyle: .alert)
             innerAlert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
-                NetworkHandler.request(method: .DELETE, endpoint: "accounts/\(self.activeAccount!.id)", request: EmptyRequest(), callback: {(success, response: DefaultResponse?) in
+                NetworkHandler.request(method: .DELETE, endpoint: "/accounts/\(self.activeAccount!.id)", request: EmptyRequest(), callback: {(success, response: DefaultResponse?) in
                     guard success else {
                         return
                     }

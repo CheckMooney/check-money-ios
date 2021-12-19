@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import UIKit
 
 class NetworkHandler {
     typealias responseClosure<V: BaseResponse> = ((Bool, V?) -> Void)
     static let session = URLSession(configuration: URLSessionConfiguration.default)
-    static let baseUrl = "http://ec2-3-38-105-161.ap-northeast-2.compute.amazonaws.com:3001/api/"
+    static let baseUrl = "http://ec2-3-38-105-161.ap-northeast-2.compute.amazonaws.com:3001/api"
     
     enum MethodList: String {
         case POST, GET, PUT, DELETE
@@ -34,7 +35,7 @@ class NetworkHandler {
         
         var urlRequest = URLRequest(url: component.url ?? URL(string: baseUrl + endpoint)!)
         urlRequest.httpMethod = method.rawValue
-        print("Send \(method.rawValue) Request: \(urlRequest.url)")
+        print("Send \(method.rawValue) Request: \(String(describing: urlRequest.url))")
         switch method {
         case .GET: break
         default:
@@ -51,11 +52,22 @@ class NetworkHandler {
             }
             urlRequest.httpBody = encodedData
         }
+        urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         sendRequest(&urlRequest, callback: callback)
     }
     
-    static func sendRequest<V>(_ urlRequest: inout URLRequest, callback: @escaping responseClosure<V>) where V: BaseResponse {
-        urlRequest.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    static func uploadFormData<V>(image: UIImage, endpoint: String, callback: @escaping responseClosure<V>) where V: BaseResponse {
+        let boundary = "Boundary-\(NSUUID().uuidString)"
+        let imageData = image.jpegData(compressionQuality: 0.4)!
+        var urlRequest = URLRequest(url: URL(string: baseUrl + endpoint)!)
+        urlRequest.httpMethod = "POST"
+        urlRequest.httpBody = createDataBody(boundary: boundary, binaryData: imageData, mimeType: "image/jpg")
+        urlRequest.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        sendRequest(&urlRequest, callback: callback)
+    }
+    
+    static private func sendRequest<V>(_ urlRequest: inout URLRequest, callback: @escaping responseClosure<V>) where V: BaseResponse {
         urlRequest.setValue("Bearer \(UserData.accessToken)", forHTTPHeaderField: "Authorization")
         
         let task = URLSession(configuration: .default).dataTask(with: urlRequest) { data, response, error in
@@ -81,5 +93,23 @@ class NetworkHandler {
         }
         
         task.resume()
+    }
+    
+    static private func createDataBody(boundary: String, binaryData: Data, mimeType: String) -> Data {
+        // https://gist.github.com/nnsnodnb/efd4635a6be2be41fdb67135d2dd9257
+        
+        var postContent = "--\(boundary)\r\n"
+        let fileName = "\(UUID().uuidString).jpeg"
+        postContent += "Content-Disposition: form-data; name=\"img\"; filename=\"\(fileName)\"\r\n"
+        postContent += "Content-Type: \(mimeType)\r\n\r\n"
+
+        var data = Data()
+        guard let postData = postContent.data(using: .utf8) else { return data }
+        data.append(postData)
+        data.append(binaryData)
+
+        guard let endData = "\r\n--\(boundary)--\r\n".data(using: .utf8) else { return data }
+        data.append(endData)
+        return data
     }
 }

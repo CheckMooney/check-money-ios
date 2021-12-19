@@ -21,7 +21,7 @@ class MainHandler {
         
         group.enter()
         queue.async {
-            NetworkHandler.request(method: .GET, endpoint: "category", request: EmptyRequest()) { (success, response: CategoryResponse?) in
+            NetworkHandler.request(method: .GET, endpoint: "/category", request: EmptyRequest()) { (success, response: CategoryResponse?) in
                 guard success else {
                     group.leave()
                     return
@@ -37,7 +37,7 @@ class MainHandler {
         
         group.enter()
         queue.async {
-            NetworkHandler.request(method: .GET, endpoint: "accounts", request: EmptyRequest()) { (success, response: AccountListResponse?) in
+            NetworkHandler.request(method: .GET, endpoint: "/accounts", request: EmptyRequest()) { (success, response: AccountListResponse?) in
                 guard success else {
                     group.leave()
                     return
@@ -50,6 +50,21 @@ class MainHandler {
                 group.leave()
             }
         }
+        
+        group.enter()
+        queue.async {
+            NetworkHandler.request(method: .GET, endpoint: "/users/my-info", request: EmptyRequest()) { (success, response: UserInfoResponse?) in
+                guard success, let res = response else {
+                    group.leave()
+                    return
+                }
+                UserData.name = res.name
+                UserData.email = res.email
+                UserData.profileImageUrl = res.img_url
+                group.leave()
+            }
+        }
+        
         group.notify(queue: queue) {
             print("group complete async")
             DispatchQueue.main.async {
@@ -86,7 +101,7 @@ class MainHandler {
                 print(dateFormat)
                 queryParams["date"] = dateFormat
             }
-            NetworkHandler.request(method: .GET, endpoint: "accounts/\(account_id)/transactions", request: EmptyRequest(), parameters: queryParams) { (success, res: QueryTransactionResponse?) in
+            NetworkHandler.request(method: .GET, endpoint: "/accounts/\(account_id)/transactions", request: EmptyRequest(), parameters: queryParams) { (success, res: QueryTransactionResponse?) in
                 guard success else {
                     print("fail to get transaction data")
                     group.leave()
@@ -108,7 +123,7 @@ class MainHandler {
     }
     
     static func refreshAccessToken() {
-        NetworkHandler.request(method: .POST, endpoint: "auth/refresh", request: LoginRefreshRequest(refresh_token: UserData.refreshToken)) { (success, response: LoginResponse?) in
+        NetworkHandler.request(method: .POST, endpoint: "/auth/refresh", request: LoginRefreshRequest(refresh_token: UserData.refreshToken)) { (success, response: LoginResponse?) in
             if success, let accessToken = response?.access_token {
                 UserData.accessToken = accessToken
                 print("access token 갱신 완료")
