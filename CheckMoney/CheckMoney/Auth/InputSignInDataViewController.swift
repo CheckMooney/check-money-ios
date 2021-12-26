@@ -61,7 +61,12 @@ class InputSignInDataViewController: UIViewController {
             nameNotInputtedText.isHidden = false
             return
         }
-        guard (checkValidPassword(code: password) && password == passwordConfirmTextField.text) else {
+        if !checkValidPassword(code: password) {
+            warningText.isHidden = false
+            return
+        }
+        guard (password == passwordConfirmTextField.text) else {
+            notMatchPasswordText.isHidden = false
             return
         }
         

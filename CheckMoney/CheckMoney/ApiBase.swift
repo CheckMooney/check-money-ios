@@ -92,6 +92,11 @@ struct LoginResponse: BaseResponse {
     @DefaultEmptyString var name: String = ""
 }
 
+struct FindPasswordRequest: BaseRequest {
+    var email: String
+    var newPassword: String
+}
+
 struct CategoryResponse: BaseResponse {
     var result: Bool
     var code: Int

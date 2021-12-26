@@ -19,7 +19,8 @@
 		687F5A2227216E9D00288E61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2027216E9D00288E61 /* Main.storyboard */; };
 		687F5A2427216E9D00288E61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2327216E9D00288E61 /* Assets.xcassets */; };
 		687F5A2727216E9D00288E61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2527216E9D00288E61 /* LaunchScreen.storyboard */; };
-		68903C0B272C08D9009A936C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68903C0A272C08D9009A936C /* SignUpViewController.swift */; };
+		68903C0B272C08D9009A936C /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68903C0A272C08D9009A936C /* VerifyEmailViewController.swift */; };
+		689DEE95277723B0002D3AD2 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689DEE94277723B0002D3AD2 /* NewPasswordViewController.swift */; };
 		68A6C79F272EB41D00732EEA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C79E272EB41D00732EEA /* LoginViewController.swift */; };
 		68A6C7A2272EBD1D00732EEA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C7A1272EBD1D00732EEA /* MainViewController.swift */; };
 		68A6C7A4272EBE1C00732EEA /* InputSignInDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C7A3272EBE1C00732EEA /* InputSignInDataViewController.swift */; };
@@ -56,7 +57,8 @@
 		687F5A2327216E9D00288E61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		687F5A2627216E9D00288E61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		687F5A2827216E9D00288E61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		68903C0A272C08D9009A936C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		68903C0A272C08D9009A936C /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
+		689DEE94277723B0002D3AD2 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		68A6C79E272EB41D00732EEA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		68A6C7A1272EBD1D00732EEA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		68A6C7A3272EBE1C00732EEA /* InputSignInDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSignInDataViewController.swift; sourceTree = "<group>"; };
@@ -141,8 +143,9 @@
 			isa = PBXGroup;
 			children = (
 				68A6C79E272EB41D00732EEA /* LoginViewController.swift */,
-				68903C0A272C08D9009A936C /* SignUpViewController.swift */,
+				68903C0A272C08D9009A936C /* VerifyEmailViewController.swift */,
 				68A6C7A3272EBE1C00732EEA /* InputSignInDataViewController.swift */,
+				689DEE94277723B0002D3AD2 /* NewPasswordViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -302,7 +305,7 @@
 				68AC306427412B92001D921C /* AccountPickerSetting.swift in Sources */,
 				68A6C79F272EB41D00732EEA /* LoginViewController.swift in Sources */,
 				687F5A1B27216E9D00288E61 /* AppDelegate.swift in Sources */,
-				68903C0B272C08D9009A936C /* SignUpViewController.swift in Sources */,
+				68903C0B272C08D9009A936C /* VerifyEmailViewController.swift in Sources */,
 				68AC305C2740D70F001D921C /* Account.swift in Sources */,
 				68AC30602740DB96001D921C /* Transaction.swift in Sources */,
 				68B4F92E27402DF50027D736 /* AddTransactionViewController.swift in Sources */,
@@ -311,6 +314,7 @@
 				68B4F9232740019D0027D736 /* SideMenuViewController.swift in Sources */,
 				684B81E42749450300EB4C03 /* TransactionTableViewCell.swift in Sources */,
 				68B4F92A274022170027D736 /* UserData.swift in Sources */,
+				689DEE95277723B0002D3AD2 /* NewPasswordViewController.swift in Sources */,
 				6845DF6C274A06B9003D1E1F /* ParentTabViewController.swift in Sources */,
 				68EC9804273789250057646A /* ResponseCode.swift in Sources */,
 				687F5A1D27216E9D00288E61 /* SceneDelegate.swift in Sources */,

@@ -86,6 +86,18 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @IBAction func signInButtonClicked(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(identifier: "verifyingEmailVC") as? VerifyEmailViewController
+        vc?.verifyingType = .SignIn
+        navigationController?.pushViewController(vc!, animated: true)
+    }
+    
+    @IBAction func findPasswordButtonClicked(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(identifier: "verifyingEmailVC") as? VerifyEmailViewController
+        vc?.verifyingType = .FindPassword
+        navigationController?.pushViewController(vc!, animated: true)
+    }
+    
     func moveToMainView(response: LoginResponse, email: String) {
         UserData.accessToken = response.access_token
         UserData.refreshToken = response.refresh_token

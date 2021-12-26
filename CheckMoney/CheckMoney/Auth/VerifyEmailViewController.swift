@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class VerifyEmailViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var warningText: UILabel!
     @IBOutlet weak var verifyingCodeView: UIView!
@@ -15,17 +15,24 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var wrongNumText: UILabel!
     
+    var verifyingType: PurposeOfVerifying = .None
+    @IBOutlet weak var naviTitle: UILabel!
+    
     var email: String = ""
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        switch verifyingType {
+        case .FindPassword: naviTitle.text = "비밀번호 찾기"
+        case .SignIn: naviTitle.text = "회원가입"
+        case .None: naviTitle.text = "?"
+        }
     }
     
     @IBAction func backButtonClicked(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func signInButtonClicked(_ sender: Any) {
+    @IBAction func requestCodeButtonClicked(_ sender: Any) {
         if !checkValidEmail(address: emailTextField.text ?? "") {
             warningText.isHidden = false
         }
@@ -34,7 +41,13 @@ class SignUpViewController: UIViewController {
             loadingView.isHidden = false
             
             let requestData = AuthEmailRequest(email: emailTextField.text!)
-            NetworkHandler.request(method: .POST, endpoint: "/auth/request/email", request: requestData) { (success, response: AuthEmailResponse?) in
+            var endpoint: String?
+            if (verifyingType == .FindPassword) {
+                endpoint = "/auth/request/email-for-pwd"
+            } else {
+                endpoint = "/auth/request/email"
+            }
+            NetworkHandler.request(method: .POST, endpoint: endpoint!, request: requestData) { (success, response: AuthEmailResponse?) in
                 DispatchQueue.main.sync {
                     print("Callback:: \(success), \(String(describing: response))")
                     self.loadingView.isHidden = true
@@ -69,9 +82,16 @@ class SignUpViewController: UIViewController {
                     self.loadingView.isHidden = true
                     
                     if let result = response?.result, result == true {
-                        let secondVC = self.storyboard?.instantiateViewController(identifier: "signinDataVC") as? InputSignInDataViewController
-                        secondVC?.email = self.email
-                        self.navigationController?.pushViewController(secondVC!, animated: true)
+                        switch self.verifyingType {
+                        case .FindPassword:
+                            let secondVC = self.storyboard?.instantiateViewController(identifier: "newPasswordVC") as? NewPasswordViewController
+                            secondVC?.email = self.email
+                            self.navigationController?.pushViewController(secondVC!, animated: true)
+                        default:
+                            let secondVC = self.storyboard?.instantiateViewController(identifier: "signinDataVC") as? InputSignInDataViewController
+                            secondVC?.email = self.email
+                            self.navigationController?.pushViewController(secondVC!, animated: true)
+                        }
                     }
                     else {
                         self.wrongNumText.text = ResponseCode(rawValue: response?.code ?? 0)?.toString()
@@ -95,4 +115,10 @@ class SignUpViewController: UIViewController {
         let regex = "^[0-9]{6}$"
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: code)
     }
+}
+
+enum PurposeOfVerifying {
+    case None
+    case SignIn
+    case FindPassword
 }
