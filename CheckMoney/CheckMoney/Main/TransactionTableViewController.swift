@@ -7,9 +7,9 @@
 
 import UIKit
 
-class TransactionListTabViewController: ParentTabViewController, UITableViewDelegate, UITableViewDataSource {
+class TransactionTableViewController: ChildViewController, UITableViewDelegate, UITableViewDataSource {
     var categorizingType: CategorizingType = .all
-    
+    var transactionData = [Transaction]()
     @IBOutlet weak var walletName: UILabel!
     @IBOutlet weak var walletSettingButton: UIButton!
     
@@ -38,8 +38,63 @@ class TransactionListTabViewController: ParentTabViewController, UITableViewDele
         naviItem.title = "\(MainHandler.year)년 \(MainHandler.month)월"
         tableView.dataSource = self
         tableView.delegate = self
-        addMenuForCategorizingType()
-        filteredData = TransactionHandler.filter(data: self.transactionData, year: MainHandler.year, month: MainHandler.month)
+        walletName.text = TransactionHandler.activeAccount?.title
+        TransactionHandler.getTransactionData(account_id: TransactionHandler.activeAccount!.id) { resData in
+            self.transactionData = resData
+            self.addMenuForCategorizingType()
+            self.filteredData = TransactionHandler.filter(data: self.transactionData, year: MainHandler.year, month: MainHandler.month)
+        }
+    }
+    
+    @IBAction func walletSettingClicked(_ sender: Any) {
+        let account = TransactionHandler.activeAccount
+        let alert = UIAlertController(title: "계좌 설정", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "수정", style: .default, handler: {_ in
+            let innerAlert = UIAlertController(title: "계좌 소개 변경", message: "현재 이름: \(account?.title ?? "")", preferredStyle: .alert)
+            innerAlert.addTextField { titleField in
+                titleField.placeholder = "변경할 이름을 입력하세요."
+            }
+            innerAlert.addTextField { descriptionField in
+                descriptionField.text = account?.description
+                descriptionField.placeholder = "설명을 입력하세요."
+            }
+            innerAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            innerAlert.addAction(UIAlertAction(title: "변경", style: .default, handler: { action in
+                let title = innerAlert.textFields?[0].text ?? account?.title ?? ""
+                let desc = innerAlert.textFields?[1].text ?? ""
+                let putRequest = AccountRequest(title: title, description: desc)
+                NetworkHandler.request(method: .PUT, endpoint: "/accounts/\(account!.id)", request: putRequest, callback: { (success, response: DefaultResponse?) in
+                    guard success else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        TransactionHandler.activeAccount = MainHandler.accounts.changeAccountData(id: account!.id, title: title, description: desc)
+                        self.walletName.text = title
+                    }
+                    
+                })
+            }))
+            self.present(innerAlert, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "삭제", style: .destructive) { _ in
+            let innerAlert = UIAlertController(title: "\(account!.title) 삭제", message: "해당 계좌를 삭제하시겠습니까?", preferredStyle: .alert)
+            innerAlert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
+                NetworkHandler.request(method: .DELETE, endpoint: "/accounts/\(account!.id)", request: EmptyRequest(), callback: {(success, response: DefaultResponse?) in
+                    guard success else {
+                        return
+                    }
+                    MainHandler.accounts.deleteAccount(id: account!.id)
+                    TransactionHandler.activeAccount = nil
+                    DispatchQueue.main.async {
+                        self.parentDelegate?.updateView(type: .Summary)
+                    }
+                })
+            }))
+            innerAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            self.present(innerAlert, animated: true, completion: nil)
+        })
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

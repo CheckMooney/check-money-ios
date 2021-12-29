@@ -8,6 +8,51 @@
 import Foundation
 
 class TransactionHandler {
+    static var activeAccount: Account? = nil
+    
+    static func getTransactionData(account_id: Int, year: Int = 0, month: Int = 0, day: Int = 0, callback: @escaping ([Transaction]) -> Void) {
+        let group = DispatchGroup()
+        let queue = DispatchQueue.global()
+        
+        var transactions = [Transaction]()
+        
+        group.enter()
+        queue.async {
+            var queryParams = ["page":"1", "limit":"10000"]
+            var dateFormat = ""
+            if year != 0 {
+                dateFormat += String(year)
+                if month != 0 {
+                    dateFormat += "-\((month / 10 == 1) ? "" : "0")\(month)"
+                    if day != 0 {
+                        dateFormat += "-\(day / 10)\(day % 10)"
+                    }
+                }
+            }
+            if !dateFormat.isEmpty {
+                print(dateFormat)
+                queryParams["date"] = dateFormat
+            }
+            NetworkHandler.request(method: .GET, endpoint: "/accounts/\(account_id)/transactions", request: EmptyRequest(), parameters: queryParams) { (success, res: QueryTransactionResponse?) in
+                guard success else {
+                    print("fail to get transaction data")
+                    group.leave()
+                    return
+                }
+                
+                if let rows = res?.rows {
+                    transactions = rows
+                }
+                group.leave()
+            }
+        }
+        group.notify(queue: queue) {
+            DispatchQueue.main.async {
+                callback(transactions)
+            }
+        }
+    }
+    
     static func filter(data: [Transaction], categorizing: CategorizingType = .all, year: Int, month: Int) -> [(Int, [Transaction])] {
         var returnValue = [(Int, [Transaction])]()
         

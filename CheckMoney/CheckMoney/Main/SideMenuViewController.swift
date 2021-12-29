@@ -17,6 +17,8 @@ class SideMenuViewController: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     
+    let rootVC = (UIApplication.shared.windows.first!.rootViewController as? UINavigationController)?.viewControllers.first as? MainViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         nameLabel.text = UserData.name
@@ -32,7 +34,8 @@ class SideMenuViewController: UIViewController {
     }
     
     @IBAction func homeButtonClicked(_ sender: Any) {
-        
+        rootVC?.currentViewContent = .Summary
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func addWalletButtonClicked(_ sender: Any) {
@@ -96,8 +99,8 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let account = MainHandler.accounts.getAllAccounts()[indexPath.row]
-        let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
-        (rootVC?.viewControllers.first as? MainViewController)?.activeAccount = account
+        TransactionHandler.activeAccount = account
+        rootVC?.currentViewContent = .TransactionList
         self.dismiss(animated: true, completion: nil)
     }
 }

@@ -9,34 +9,22 @@ import UIKit
 import SwiftUI
 import JJFloatingActionButton
 
-class MainViewController: UIViewController {
-    var currentViewContent: ViewContent = .Summary
+class MainViewController: UIViewController, ChildViewControllerDelegate {
     let handler = MainHandler()
-    private var _activeAccount: Account? = nil
-    var activeAccount: Account? {
-        get { return _activeAccount }
-        set(value) {
-            _activeAccount = value
-            DispatchQueue.main.async {
-                if value != nil {
-                    self.handler.getTransactionData(account_id: value!.id)
-                }
-            }
-        }
-    }
     
-    private var _currentAccountTransaction = [Transaction]()
-    var currentAccountTransaction: [Transaction] {
-        get { return _currentAccountTransaction }
-        set(value) {
-            _currentAccountTransaction = value
-//            self.setContainerViewController(self.tabBar.selectedItem?.tag == 0 ? ViewContent.Summary : ViewContent.TransactionList, data: value)
+    private var _currentviewContent = ViewContent.Summary
+    var currentViewContent: ViewContent {
+        get {
+            return _currentviewContent
+        }
+        set {
+            _currentviewContent = newValue
+            setContainerViewController(newValue)
         }
     }
     
     let buttonColor = UIColor(named: "AppColor") ?? UIColor.blue
     let actionButton = JJFloatingActionButton()
-    @IBOutlet weak var tabBar: UITabBar!
     
     @IBOutlet weak var containerView: UIView!
     override func viewDidLoad() {
@@ -45,56 +33,21 @@ class MainViewController: UIViewController {
         setFloatingButtons()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setContainerViewController(currentViewContent)
+    }
+    
     func initViewData() {
         print("init MainView")
-        activeAccount = MainHandler.accounts.getDefaultAccount()
+        TransactionHandler.activeAccount = MainHandler.accounts.getDefaultAccount()
     }
-    
+
     func updateTransactionData() {
-        self.handler.getTransactionData(account_id: activeAccount!.id)
+        setContainerViewController(.TransactionList)
     }
     
-    @IBAction func walletSettingButtonClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "계좌 설정", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "수정", style: .default, handler: {_ in
-            let innerAlert = UIAlertController(title: "계좌 소개 변경", message: "현재 이름: \(self.activeAccount?.title ?? "")", preferredStyle: .alert)
-            innerAlert.addTextField { titleField in
-                titleField.placeholder = "변경할 이름을 입력하세요."
-            }
-            innerAlert.addTextField { descriptionField in
-                descriptionField.text = self.activeAccount?.description
-                descriptionField.placeholder = "설명을 입력하세요."
-            }
-            innerAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-            innerAlert.addAction(UIAlertAction(title: "변경", style: .default, handler: { action in
-                let title = innerAlert.textFields?[0].text ?? self.activeAccount?.title ?? ""
-                let desc = innerAlert.textFields?[1].text ?? ""
-                let putRequest = AccountRequest(title: title, description: desc)
-                NetworkHandler.request(method: .PUT, endpoint: "/accounts/\(self.activeAccount!.id)", request: putRequest, callback: { (success, response: DefaultResponse?) in
-                    guard success else {
-                        return
-                    }
-                    self.activeAccount = MainHandler.accounts.changeAccountData(id: self.activeAccount!.id, title: title, description: desc)
-                })
-            }))
-            self.present(innerAlert, animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "삭제", style: .destructive) { _ in
-            let innerAlert = UIAlertController(title: "\(self.activeAccount!.title) 삭제", message: "해당 계좌를 삭제하시겠습니까?", preferredStyle: .alert)
-            innerAlert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {_ in
-                NetworkHandler.request(method: .DELETE, endpoint: "/accounts/\(self.activeAccount!.id)", request: EmptyRequest(), callback: {(success, response: DefaultResponse?) in
-                    guard success else {
-                        return
-                    }
-                    MainHandler.accounts.deleteAccount(id: self.activeAccount!.id)
-                    self.activeAccount = MainHandler.accounts.getDefaultAccount()
-                })
-            }))
-            innerAlert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-            self.present(innerAlert, animated: true, completion: nil)
-        })
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+    func updateView(type: ViewContent) {
+        setContainerViewController(type)
     }
     
     func setFloatingButtons() {
@@ -118,7 +71,7 @@ class MainViewController: UIViewController {
         let nextVC = self.storyboard?.instantiateViewController(identifier: "addTransactionVC") as? AddTransactionViewController
         nextVC?.modalTransitionStyle = .coverVertical
         nextVC?.isConsumption = isConsumption
-        nextVC?.accountName = self.activeAccount!.title
+        nextVC?.accountName = TransactionHandler.activeAccount?.title ?? ""
         
         self.present(nextVC!, animated: true, completion: nil)
     }
@@ -130,10 +83,15 @@ class MainViewController: UIViewController {
         containerView.addSubview(addViewController.view)
         addViewController.view.frame = containerView.bounds
         addViewController.didMove(toParent: self)
+        (addViewController as! ChildViewController).parentDelegate = self
     }
 }
 
 enum ViewContent: String {
     case Summary = "SummaryView"
     case TransactionList = "TransactionListView"
+}
+
+protocol ChildViewControllerDelegate: UIViewController {
+    func updateView(type: ViewContent)
 }

@@ -1597,16 +1597,16 @@
             </objects>
             <point key="canvasLocation" x="1839" y="-511"/>
         </scene>
-        <!--Transaction List Tab View Controller-->
+        <!--Transaction Table View Controller-->
         <scene sceneID="Z3Y-Vh-z4N">
             <objects>
-                <viewController storyboardIdentifier="TransactionListView" id="e57-YT-ahf" customClass="TransactionListTabViewController" customModule="CheckMoney" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TransactionListView" id="e57-YT-ahf" customClass="TransactionTableViewController" customModule="CheckMoney" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4un-4p-V6y">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="KNN-xg-Axw">
-                                <rect key="frame" x="0.0" y="188" width="414" height="628"/>
+                                <rect key="frame" x="0.0" y="181.5" width="414" height="634.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="transaction_cell" id="O8y-4e-Fos" customClass="TransactionTableViewCell" customModule="CheckMoney" customModuleProvider="target">
@@ -1666,7 +1666,7 @@
                                 </prototypes>
                             </tableView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Vy-CQ-Jwa">
-                                <rect key="frame" x="0.0" y="144" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="137.5" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="2021년 11월" id="Wml-qG-EDM">
                                         <leftBarButtonItems>
@@ -1710,8 +1710,8 @@
                                     <constraint firstAttribute="height" constant="0.29999999999999999" id="1nx-zV-e06"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hU-B9-pOA" userLabel="SettingButton">
-                                <rect key="frame" x="324" y="44" width="35" height="10"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hU-B9-pOA" userLabel="SettingButton">
+                                <rect key="frame" x="364" y="54" width="35" height="10"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                 </accessibility>
@@ -1726,12 +1726,11 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                 </state>
                                 <connections>
-                                    <action selector="walletSettingButtonClicked:" destination="rxv-9t-vc1" eventType="touchUpInside" id="afC-BA-K5w"/>
+                                    <action selector="walletSettingClicked:" destination="e57-YT-ahf" eventType="touchUpInside" id="rvH-Uk-SLc"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kWF-a7-xw3" userLabel="walletName">
-                                <rect key="frame" x="285" y="76" width="69.666666666666686" height="33.666666666666657"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kWF-a7-xw3" userLabel="walletName">
+                                <rect key="frame" x="329" y="84" width="70" height="33.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1741,15 +1740,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="SBe-RL-RPz" firstAttribute="leading" secondItem="4un-4p-V6y" secondAttribute="leading" id="43N-4y-sf8"/>
+                            <constraint firstItem="kWF-a7-xw3" firstAttribute="top" secondItem="4hU-B9-pOA" secondAttribute="bottom" constant="20" id="5Fh-Tu-Lxt"/>
                             <constraint firstItem="fBP-Nu-Mvw" firstAttribute="top" secondItem="KNN-xg-Axw" secondAttribute="bottom" id="5pE-d6-Q2f"/>
                             <constraint firstItem="SBe-RL-RPz" firstAttribute="width" secondItem="KNN-xg-Axw" secondAttribute="width" id="A4a-bQ-8WL"/>
+                            <constraint firstItem="p7E-1E-e56" firstAttribute="trailing" secondItem="4hU-B9-pOA" secondAttribute="trailing" constant="15" id="CYu-fT-Hrc"/>
+                            <constraint firstItem="4hU-B9-pOA" firstAttribute="top" secondItem="p7E-1E-e56" secondAttribute="top" constant="10" id="LXs-yb-ocd"/>
                             <constraint firstItem="KNN-xg-Axw" firstAttribute="leading" secondItem="4un-4p-V6y" secondAttribute="leading" id="NuR-Bf-h6b"/>
                             <constraint firstAttribute="trailing" secondItem="3Vy-CQ-Jwa" secondAttribute="trailing" id="WYS-G3-mjz"/>
                             <constraint firstItem="KNN-xg-Axw" firstAttribute="top" secondItem="3Vy-CQ-Jwa" secondAttribute="bottom" id="Z2Q-Rn-yH0"/>
                             <constraint firstItem="SBe-RL-RPz" firstAttribute="top" secondItem="KNN-xg-Axw" secondAttribute="bottom" id="eGE-Z4-MCW"/>
-                            <constraint firstItem="p7E-1E-e56" firstAttribute="top" secondItem="3Vy-CQ-Jwa" secondAttribute="top" constant="-100" id="ghl-m1-UBg"/>
                             <constraint firstItem="3Vy-CQ-Jwa" firstAttribute="leading" secondItem="4un-4p-V6y" secondAttribute="leading" id="h31-h8-92N"/>
+                            <constraint firstItem="p7E-1E-e56" firstAttribute="trailing" secondItem="kWF-a7-xw3" secondAttribute="trailing" constant="15" id="hlk-Co-na1"/>
                             <constraint firstAttribute="trailing" secondItem="KNN-xg-Axw" secondAttribute="trailing" id="iAr-5z-CZV"/>
+                            <constraint firstItem="3Vy-CQ-Jwa" firstAttribute="top" secondItem="kWF-a7-xw3" secondAttribute="bottom" constant="20" id="jYX-V1-olp"/>
                             <constraint firstItem="fBP-Nu-Mvw" firstAttribute="leading" secondItem="p7E-1E-e56" secondAttribute="leading" constant="16" id="oQA-vf-dty"/>
                             <constraint firstAttribute="bottom" secondItem="KNN-xg-Axw" secondAttribute="bottom" constant="80" id="w4d-TW-iwp"/>
                             <constraint firstItem="fBP-Nu-Mvw" firstAttribute="bottom" secondItem="p7E-1E-e56" secondAttribute="bottom" id="xEK-zW-aEo"/>

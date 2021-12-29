@@ -1,15 +1,14 @@
 //
-//  ParentTabViewController.swift
+//  ChildViewController.swift
 //  CheckMoney
 //
-//  Created by SeungYeon Kim on 2021/11/21.
+//  Created by SeungYeon Kim on 2021/12/29.
 //
 
 import UIKit
 
-class ParentTabViewController: UIViewController {
-    var transactionData = [Transaction]()
-    
+class ChildViewController: UIViewController {
+    var parentDelegate: ChildViewControllerDelegate? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
 

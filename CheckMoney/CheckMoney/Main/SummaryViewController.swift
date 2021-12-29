@@ -8,7 +8,7 @@
 import UIKit
 import Charts
 
-class SummaryViewController: UIViewController, ChartViewDelegate {
+class SummaryViewController: ChildViewController, ChartViewDelegate {
     @IBOutlet weak var headLabel: UILabel!
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var pieChartView: PieChartView!
@@ -125,8 +125,8 @@ class SummaryViewController: UIViewController, ChartViewDelegate {
         self.barChartView.xAxis.labelPosition = .bottom
         self.barChartView.leftAxis.axisMinimum = 0
         self.barChartView.rightAxis.enabled = false
-        self.barChartView.zoom(scaleX: index == 0 ? 1 : 3, scaleY: 1, x: 0, y: 0)
         self.barChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+        self.barChartView.zoom(scaleX: index == 0 ? 0 : 3, scaleY: 1, x: 0, y: 0)
     }
     
     func setPieChart(segmentedControlIndex index: Int) {

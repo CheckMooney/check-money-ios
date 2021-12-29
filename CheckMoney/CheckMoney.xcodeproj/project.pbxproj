@@ -8,10 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		682640E6276DCA0800D6407E /* EditingProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682640E5276DCA0800D6407E /* EditingProfileViewController.swift */; };
-		6845DF6C274A06B9003D1E1F /* ParentTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6845DF6B274A06B9003D1E1F /* ParentTabViewController.swift */; };
 		6845DF6E274A07D7003D1E1F /* TransactionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6845DF6D274A07D7003D1E1F /* TransactionHandler.swift */; };
 		6845DF70274A20FE003D1E1F /* TransactionDatePickerSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6845DF6F274A20FE003D1E1F /* TransactionDatePickerSetting.swift */; };
-		684B81E02749354B00EB4C03 /* TransactionListTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B81DF2749354B00EB4C03 /* TransactionListTabViewController.swift */; };
+		684B81E02749354B00EB4C03 /* TransactionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B81DF2749354B00EB4C03 /* TransactionTableViewController.swift */; };
 		684B81E227493D7900EB4C03 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B81E127493D7900EB4C03 /* SummaryViewController.swift */; };
 		684B81E42749450300EB4C03 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B81E32749450300EB4C03 /* TransactionTableViewCell.swift */; };
 		687F5A1B27216E9D00288E61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687F5A1A27216E9D00288E61 /* AppDelegate.swift */; };
@@ -38,6 +37,7 @@
 		68B4F925274003820027D736 /* SideMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B4F924274003820027D736 /* SideMenuOption.swift */; };
 		68B4F92A274022170027D736 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B4F929274022160027D736 /* UserData.swift */; };
 		68B4F92E27402DF50027D736 /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B4F92D27402DF50027D736 /* AddTransactionViewController.swift */; };
+		68BDC358277C4C6B00462DE9 /* ChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BDC357277C4C6B00462DE9 /* ChildViewController.swift */; };
 		68EC9804273789250057646A /* ResponseCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC9803273789250057646A /* ResponseCode.swift */; };
 		FA25E518EE01C813904D9A96 /* Pods_CheckMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95A426456D5D66B8B8ECE2C6 /* Pods_CheckMoney.framework */; };
 /* End PBXBuildFile section */
@@ -45,10 +45,9 @@
 /* Begin PBXFileReference section */
 		044AA87670E7AE7F0C20139E /* Pods-CheckMoney.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckMoney.debug.xcconfig"; path = "Target Support Files/Pods-CheckMoney/Pods-CheckMoney.debug.xcconfig"; sourceTree = "<group>"; };
 		682640E5276DCA0800D6407E /* EditingProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingProfileViewController.swift; sourceTree = "<group>"; };
-		6845DF6B274A06B9003D1E1F /* ParentTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTabViewController.swift; sourceTree = "<group>"; };
 		6845DF6D274A07D7003D1E1F /* TransactionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHandler.swift; sourceTree = "<group>"; };
 		6845DF6F274A20FE003D1E1F /* TransactionDatePickerSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDatePickerSetting.swift; sourceTree = "<group>"; };
-		684B81DF2749354B00EB4C03 /* TransactionListTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListTabViewController.swift; sourceTree = "<group>"; };
+		684B81DF2749354B00EB4C03 /* TransactionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewController.swift; sourceTree = "<group>"; };
 		684B81E127493D7900EB4C03 /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		684B81E32749450300EB4C03 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		687F5A1727216E9D00288E61 /* CheckMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +76,7 @@
 		68B4F924274003820027D736 /* SideMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuOption.swift; sourceTree = "<group>"; };
 		68B4F929274022160027D736 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		68B4F92D27402DF50027D736 /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
+		68BDC357277C4C6B00462DE9 /* ChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildViewController.swift; sourceTree = "<group>"; };
 		68EC9803273789250057646A /* ResponseCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseCode.swift; sourceTree = "<group>"; };
 		95A426456D5D66B8B8ECE2C6 /* Pods_CheckMoney.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckMoney.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA78EA3D8EC0A4761EB28FC /* Pods-CheckMoney.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckMoney.release.xcconfig"; path = "Target Support Files/Pods-CheckMoney/Pods-CheckMoney.release.xcconfig"; sourceTree = "<group>"; };
@@ -166,13 +166,13 @@
 				68AC305F2740DB96001D921C /* Transaction.swift */,
 				68AC306127412886001D921C /* CategoryPickerSetting.swift */,
 				68AC306327412B92001D921C /* AccountPickerSetting.swift */,
-				684B81DF2749354B00EB4C03 /* TransactionListTabViewController.swift */,
+				684B81DF2749354B00EB4C03 /* TransactionTableViewController.swift */,
 				684B81E127493D7900EB4C03 /* SummaryViewController.swift */,
 				684B81E32749450300EB4C03 /* TransactionTableViewCell.swift */,
-				6845DF6B274A06B9003D1E1F /* ParentTabViewController.swift */,
 				6845DF6D274A07D7003D1E1F /* TransactionHandler.swift */,
 				6845DF6F274A20FE003D1E1F /* TransactionDatePickerSetting.swift */,
 				682640E5276DCA0800D6407E /* EditingProfileViewController.swift */,
+				68BDC357277C4C6B00462DE9 /* ChildViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -307,19 +307,19 @@
 				6845DF70274A20FE003D1E1F /* TransactionDatePickerSetting.swift in Sources */,
 				68AC306427412B92001D921C /* AccountPickerSetting.swift in Sources */,
 				68A6C79F272EB41D00732EEA /* LoginViewController.swift in Sources */,
+				68BDC358277C4C6B00462DE9 /* ChildViewController.swift in Sources */,
 				687F5A1B27216E9D00288E61 /* AppDelegate.swift in Sources */,
 				68903C0B272C08D9009A936C /* VerifyEmailViewController.swift in Sources */,
 				68AC305C2740D70F001D921C /* Account.swift in Sources */,
 				68AC30602740DB96001D921C /* Transaction.swift in Sources */,
 				68B4F92E27402DF50027D736 /* AddTransactionViewController.swift in Sources */,
-				684B81E02749354B00EB4C03 /* TransactionListTabViewController.swift in Sources */,
+				684B81E02749354B00EB4C03 /* TransactionTableViewController.swift in Sources */,
 				68AA6E98272D5BF0009EEA76 /* NetworkHandler.swift in Sources */,
 				68A3C5AB277878B0003CA965 /* Extension_UIView.swift in Sources */,
 				68B4F9232740019D0027D736 /* SideMenuViewController.swift in Sources */,
 				684B81E42749450300EB4C03 /* TransactionTableViewCell.swift in Sources */,
 				68B4F92A274022170027D736 /* UserData.swift in Sources */,
 				689DEE95277723B0002D3AD2 /* NewPasswordViewController.swift in Sources */,
-				6845DF6C274A06B9003D1E1F /* ParentTabViewController.swift in Sources */,
 				68EC9804273789250057646A /* ResponseCode.swift in Sources */,
 				687F5A1D27216E9D00288E61 /* SceneDelegate.swift in Sources */,
 				68AA6E9A272D62BC009EEA76 /* ApiBase.swift in Sources */,

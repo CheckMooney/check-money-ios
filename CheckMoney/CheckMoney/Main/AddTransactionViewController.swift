@@ -86,13 +86,15 @@ class AddTransactionViewController: UIViewController {
             return
         }
         let type = transactionType.selectedSegmentIndex
-        let category = MainHandler.category.firstIndex(of:categoryPicker.text!) ?? 0
-        if type == 1 && (categoryPicker.text!.isEmpty || category == 0) {
+        let a = MainHandler.category
+        let dddd = categoryPicker.text
+        let category = MainHandler.category.firstIndex(of:categoryPicker.text!) ?? -1
+        if type == 1 && (categoryPicker.text!.isEmpty || category == -1) {
             warningText.isHidden = false
             warningText.text = "분류를 선택해주세요."
             return
         }
-        guard let accountId = MainHandler.accounts.getAccount(title: accountPicker.text!)?.id else {
+        guard let selectedAccount = MainHandler.accounts.getAccount(title: accountPicker.text!) else {
             warningText.isHidden = false
             warningText.text = "계좌 아이디를 가져오는데 문제가 생겼습니다."
             return
@@ -102,7 +104,7 @@ class AddTransactionViewController: UIViewController {
         let dateFommatter = DateFormatter()
         dateFommatter.dateFormat = "yyyy-MM-dd"
         let dateStr = dateFommatter.string(from: datePicker.date)
-        let transaction = AddTransactionRequest(is_consumption: type, price: price, detail: explain, category: category, date: dateStr, account_id: accountId)
+        let transaction = AddTransactionRequest(is_consumption: type, price: price, detail: explain, category: category, date: dateStr, account_id: selectedAccount.id)
         
         NetworkHandler.request(method: .POST, endpoint: "/transactions", request: transaction) { (success, res: AddTransactionResponse?) in
             guard success else {
@@ -114,6 +116,7 @@ class AddTransactionViewController: UIViewController {
                     self.presentingViewController?.dismiss(animated: true, completion: {
                         DispatchQueue.main.async {
                             let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
+                            TransactionHandler.activeAccount = selectedAccount
                             (rootVC?.viewControllers.first as? MainViewController)?.updateTransactionData()
                         }
                     })
