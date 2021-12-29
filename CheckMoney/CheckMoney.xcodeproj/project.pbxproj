@@ -12,7 +12,7 @@
 		6845DF6E274A07D7003D1E1F /* TransactionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6845DF6D274A07D7003D1E1F /* TransactionHandler.swift */; };
 		6845DF70274A20FE003D1E1F /* TransactionDatePickerSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6845DF6F274A20FE003D1E1F /* TransactionDatePickerSetting.swift */; };
 		684B81E02749354B00EB4C03 /* TransactionListTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B81DF2749354B00EB4C03 /* TransactionListTabViewController.swift */; };
-		684B81E227493D7900EB4C03 /* AnalyticsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B81E127493D7900EB4C03 /* AnalyticsTabViewController.swift */; };
+		684B81E227493D7900EB4C03 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B81E127493D7900EB4C03 /* SummaryViewController.swift */; };
 		684B81E42749450300EB4C03 /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B81E32749450300EB4C03 /* TransactionTableViewCell.swift */; };
 		687F5A1B27216E9D00288E61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687F5A1A27216E9D00288E61 /* AppDelegate.swift */; };
 		687F5A1D27216E9D00288E61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687F5A1C27216E9D00288E61 /* SceneDelegate.swift */; };
@@ -21,6 +21,7 @@
 		687F5A2727216E9D00288E61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 687F5A2527216E9D00288E61 /* LaunchScreen.storyboard */; };
 		68903C0B272C08D9009A936C /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68903C0A272C08D9009A936C /* VerifyEmailViewController.swift */; };
 		689DEE95277723B0002D3AD2 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689DEE94277723B0002D3AD2 /* NewPasswordViewController.swift */; };
+		68A3C5AB277878B0003CA965 /* Extension_UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A3C5AA277878B0003CA965 /* Extension_UIView.swift */; };
 		68A6C79F272EB41D00732EEA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C79E272EB41D00732EEA /* LoginViewController.swift */; };
 		68A6C7A2272EBD1D00732EEA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C7A1272EBD1D00732EEA /* MainViewController.swift */; };
 		68A6C7A4272EBE1C00732EEA /* InputSignInDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A6C7A3272EBE1C00732EEA /* InputSignInDataViewController.swift */; };
@@ -48,7 +49,7 @@
 		6845DF6D274A07D7003D1E1F /* TransactionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHandler.swift; sourceTree = "<group>"; };
 		6845DF6F274A20FE003D1E1F /* TransactionDatePickerSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDatePickerSetting.swift; sourceTree = "<group>"; };
 		684B81DF2749354B00EB4C03 /* TransactionListTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListTabViewController.swift; sourceTree = "<group>"; };
-		684B81E127493D7900EB4C03 /* AnalyticsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsTabViewController.swift; sourceTree = "<group>"; };
+		684B81E127493D7900EB4C03 /* SummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		684B81E32749450300EB4C03 /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
 		687F5A1727216E9D00288E61 /* CheckMoney.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckMoney.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		687F5A1A27216E9D00288E61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 		687F5A2827216E9D00288E61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68903C0A272C08D9009A936C /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		689DEE94277723B0002D3AD2 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
+		68A3C5AA277878B0003CA965 /* Extension_UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_UIView.swift; sourceTree = "<group>"; };
 		68A6C79E272EB41D00732EEA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		68A6C7A1272EBD1D00732EEA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		68A6C7A3272EBE1C00732EEA /* InputSignInDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSignInDataViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				68AA6E99272D62BC009EEA76 /* ApiBase.swift */,
 				68EC9803273789250057646A /* ResponseCode.swift */,
 				68B4F929274022160027D736 /* UserData.swift */,
+				68A3C5AA277878B0003CA965 /* Extension_UIView.swift */,
 			);
 			path = CheckMoney;
 			sourceTree = "<group>";
@@ -164,7 +167,7 @@
 				68AC306127412886001D921C /* CategoryPickerSetting.swift */,
 				68AC306327412B92001D921C /* AccountPickerSetting.swift */,
 				684B81DF2749354B00EB4C03 /* TransactionListTabViewController.swift */,
-				684B81E127493D7900EB4C03 /* AnalyticsTabViewController.swift */,
+				684B81E127493D7900EB4C03 /* SummaryViewController.swift */,
 				684B81E32749450300EB4C03 /* TransactionTableViewCell.swift */,
 				6845DF6B274A06B9003D1E1F /* ParentTabViewController.swift */,
 				6845DF6D274A07D7003D1E1F /* TransactionHandler.swift */,
@@ -311,6 +314,7 @@
 				68B4F92E27402DF50027D736 /* AddTransactionViewController.swift in Sources */,
 				684B81E02749354B00EB4C03 /* TransactionListTabViewController.swift in Sources */,
 				68AA6E98272D5BF0009EEA76 /* NetworkHandler.swift in Sources */,
+				68A3C5AB277878B0003CA965 /* Extension_UIView.swift in Sources */,
 				68B4F9232740019D0027D736 /* SideMenuViewController.swift in Sources */,
 				684B81E42749450300EB4C03 /* TransactionTableViewCell.swift in Sources */,
 				68B4F92A274022170027D736 /* UserData.swift in Sources */,
@@ -321,7 +325,7 @@
 				68AA6E9A272D62BC009EEA76 /* ApiBase.swift in Sources */,
 				68A6C7A4272EBE1C00732EEA /* InputSignInDataViewController.swift in Sources */,
 				68B4F925274003820027D736 /* SideMenuOption.swift in Sources */,
-				684B81E227493D7900EB4C03 /* AnalyticsTabViewController.swift in Sources */,
+				684B81E227493D7900EB4C03 /* SummaryViewController.swift in Sources */,
 				68AC306227412886001D921C /* CategoryPickerSetting.swift in Sources */,
 				68AC305E2740D7EF001D921C /* MainHandler.swift in Sources */,
 			);

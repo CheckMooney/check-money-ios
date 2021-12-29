@@ -14,6 +14,7 @@ class MainHandler {
     
     static var year = Calendar.current.component(.year, from: Date())
     static var month = Calendar.current.component(.month, from: Date())
+    static var day = Calendar.current.component(.day, from: Date())
     
     init() {
         let group = DispatchGroup()

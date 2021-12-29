@@ -31,6 +31,10 @@ class SideMenuViewController: UIViewController {
         }
     }
     
+    @IBAction func homeButtonClicked(_ sender: Any) {
+        
+    }
+    
     @IBAction func addWalletButtonClicked(_ sender: Any) {
         let alert = UIAlertController.init(title: "지갑 추가하기", message: "지갑의 이름과 설명을 입력해주세요.", preferredStyle: .alert)
         alert.addTextField { textField in

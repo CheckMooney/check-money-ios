@@ -9,16 +9,15 @@ import UIKit
 import SwiftUI
 import JJFloatingActionButton
 
-class MainViewController: UIViewController, UITabBarDelegate {
+class MainViewController: UIViewController {
+    var currentViewContent: ViewContent = .Summary
     let handler = MainHandler()
     private var _activeAccount: Account? = nil
     var activeAccount: Account? {
         get { return _activeAccount }
         set(value) {
             _activeAccount = value
-            self.tabBar.selectedItem = tabBar.items?.first
             DispatchQueue.main.async {
-                self.walletName.text = value?.title
                 if value != nil {
                     self.handler.getTransactionData(account_id: value!.id)
                 }
@@ -31,12 +30,9 @@ class MainViewController: UIViewController, UITabBarDelegate {
         get { return _currentAccountTransaction }
         set(value) {
             _currentAccountTransaction = value
-            self.setContainerViewController(self.tabBar.selectedItem?.tag == 0 ? TabViewList.Analytics : TabViewList.TransactionList, data: value)
+//            self.setContainerViewController(self.tabBar.selectedItem?.tag == 0 ? ViewContent.Summary : ViewContent.TransactionList, data: value)
         }
     }
-    
-    @IBOutlet weak var walletName: UILabel!
-    @IBOutlet weak var walletSettingButton: UIButton!
     
     let buttonColor = UIColor(named: "AppColor") ?? UIColor.blue
     let actionButton = JJFloatingActionButton()
@@ -45,11 +41,8 @@ class MainViewController: UIViewController, UITabBarDelegate {
     @IBOutlet weak var containerView: UIView!
     override func viewDidLoad() {
         print("MainViewController load!")
+        setContainerViewController(.Summary)
         setFloatingButtons()
-        
-//        setContainerViewController(TabViewList.Analytics)
-        tabBar.delegate = self
-        tabBar.selectedItem = tabBar.items?.first
     }
     
     func initViewData() {
@@ -119,7 +112,6 @@ class MainViewController: UIViewController, UITabBarDelegate {
         
         actionButton.buttonColor = buttonColor
         actionButton.display(inViewController: self)
-        self.view.addConstraint(NSLayoutConstraint(item: tabBar!, attribute: .top, relatedBy: .equal, toItem: actionButton, attribute: .bottom, multiplier: 1, constant: 12))
     }
     
     private func addNewTransaction(isConsumption: Bool) {
@@ -130,27 +122,10 @@ class MainViewController: UIViewController, UITabBarDelegate {
         
         self.present(nextVC!, animated: true, completion: nil)
     }
-    
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if item.tag == 0 {
-            setContainerViewController(TabViewList.Analytics, data: currentAccountTransaction)
-        } else {
-            setContainerViewController(TabViewList.TransactionList, data: currentAccountTransaction)
-        }
-    }
-    
-    func setContainerViewController(_ view: TabViewList, data: [Transaction] = [Transaction]()) {
-//        switch view {
-//        case .Analytics:
-//            self.walletName.isHidden = true
-//            self.walletSettingButton.isHidden = true
-//        case .TransactionList:
-//            self.walletName.isHidden = false
-//            self.walletSettingButton.isHidden = false
-//        }
+
+    func setContainerViewController(_ view: ViewContent) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let addViewController = storyboard.instantiateViewController(withIdentifier: view.rawValue) as! ParentTabViewController
-        addViewController.transactionData = data
+        let addViewController = storyboard.instantiateViewController(withIdentifier: view.rawValue)
         self.addChild(addViewController)
         containerView.addSubview(addViewController.view)
         addViewController.view.frame = containerView.bounds
@@ -158,7 +133,7 @@ class MainViewController: UIViewController, UITabBarDelegate {
     }
 }
 
-enum TabViewList: String {
-    case Analytics = "AnalyticsView"
+enum ViewContent: String {
+    case Summary = "SummaryView"
     case TransactionList = "TransactionListView"
 }

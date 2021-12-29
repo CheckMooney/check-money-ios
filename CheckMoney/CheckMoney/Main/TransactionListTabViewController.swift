@@ -10,6 +10,9 @@ import UIKit
 class TransactionListTabViewController: ParentTabViewController, UITableViewDelegate, UITableViewDataSource {
     var categorizingType: CategorizingType = .all
     
+    @IBOutlet weak var walletName: UILabel!
+    @IBOutlet weak var walletSettingButton: UIButton!
+    
     @IBOutlet weak var naviItem: UINavigationItem!
     @IBOutlet weak var categorizingButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
