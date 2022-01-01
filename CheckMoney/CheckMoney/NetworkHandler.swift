@@ -11,7 +11,7 @@ import UIKit
 class NetworkHandler {
     typealias responseClosure<V: BaseResponse> = ((Bool, V?) -> Void)
     static let session = URLSession(configuration: URLSessionConfiguration.default)
-    static let baseUrl = "http://ec2-3-38-105-161.ap-northeast-2.compute.amazonaws.com:3001/api"
+    static let baseUrl = "https://checkmoneyproject.azurewebsites.net/api"
     
     enum MethodList: String {
         case POST, GET, PUT, DELETE

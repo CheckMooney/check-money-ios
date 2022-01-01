@@ -12,6 +12,7 @@ class AddTransactionViewController: UIViewController {
     var accountName: String = ""
     
     @IBOutlet weak var categoryView: UIView!
+    @IBOutlet weak var subscriptionView: UIView!
     @IBOutlet weak var transactionType: UISegmentedControl!
     
     @IBOutlet weak var accountPicker: UITextField!
@@ -19,6 +20,7 @@ class AddTransactionViewController: UIViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var explainText: UITextField!
     @IBOutlet weak var categoryPicker: UITextField!
+    @IBOutlet weak var subscriptionSwitch: UISwitch!
     
     @IBOutlet weak var warningText: UILabel!
     
@@ -35,6 +37,7 @@ class AddTransactionViewController: UIViewController {
         }
         transactionType.selectedSegmentIndex = isConsumption ? 1 : 0
         categoryView.isHidden = !isConsumption
+        subscriptionView.isHidden = !isConsumption
         setPickerView()
         accountPicker.text = accountName
     }
@@ -47,6 +50,7 @@ class AddTransactionViewController: UIViewController {
     
     @IBAction func transactionTypeChanged(_ sender: Any) {
         categoryView.isHidden = transactionType.selectedSegmentIndex == 0
+        subscriptionView.isHidden = transactionType.selectedSegmentIndex == 0
     }
     
     func setPickerView() {
@@ -86,8 +90,6 @@ class AddTransactionViewController: UIViewController {
             return
         }
         let type = transactionType.selectedSegmentIndex
-        let a = MainHandler.category
-        let dddd = categoryPicker.text
         let category = MainHandler.category.firstIndex(of:categoryPicker.text!) ?? -1
         if type == 1 && (categoryPicker.text!.isEmpty || category == -1) {
             warningText.isHidden = false
@@ -104,25 +106,30 @@ class AddTransactionViewController: UIViewController {
         let dateFommatter = DateFormatter()
         dateFommatter.dateFormat = "yyyy-MM-dd"
         let dateStr = dateFommatter.string(from: datePicker.date)
-        let transaction = AddTransactionRequest(is_consumption: type, price: price, detail: explain, category: category, date: dateStr, account_id: selectedAccount.id)
         
-        NetworkHandler.request(method: .POST, endpoint: "/transactions", request: transaction) { (success, res: AddTransactionResponse?) in
-            guard success else {
-                return
-            }
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: nil, message: "거래 내역 생성이 완료되었습니다.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
-                    self.presentingViewController?.dismiss(animated: true, completion: {
-                        DispatchQueue.main.async {
-                            let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
-                            TransactionHandler.activeAccount = selectedAccount
-                            (rootVC?.viewControllers.first as? MainViewController)?.updateTransactionData()
-                        }
-                    })
-                }))
-                self.present(alert, animated: true, completion: nil)
-            }
+        if type == 1 && subscriptionSwitch.isOn {
+            NetworkHandler.request(method: .POST, endpoint: "/accounts/\(selectedAccount.id)/subscriptions", request: AddSubscriptionRequest(is_consumption: type, price: price, detail: explain, category: category, date: dateStr), callback: handleResponseForAddingTransaction(success:res:))
+        } else {
+            let transaction = AddTransactionRequest(is_consumption: type, price: price, detail: explain, category: category, date: dateStr, account_id: selectedAccount.id)
+            NetworkHandler.request(method: .POST, endpoint: "/transactions", request: transaction, callback: handleResponseForAddingTransaction(success:res:))
+        }
+    }
+    
+    private func handleResponseForAddingTransaction(success: Bool, res: AddTransactionResponse?) {
+        guard success else {
+            return
+        }
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: nil, message: "거래 내역 생성이 완료되었습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: {_ in
+                self.presentingViewController?.dismiss(animated: true, completion: {
+                    DispatchQueue.main.async {
+                        let rootVC = UIApplication.shared.windows.first!.rootViewController as? UINavigationController
+                        (rootVC?.viewControllers.first as? MainViewController)?.updateTransactionData()
+                    }
+                })
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

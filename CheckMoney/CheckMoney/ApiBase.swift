@@ -133,6 +133,14 @@ struct AddTransactionRequest: BaseRequest {
     var account_id: Int
 }
 
+struct AddSubscriptionRequest: BaseRequest {
+    var is_consumption: Int
+    var price: Int
+    var detail: String
+    var category: Int
+    var date: String
+}
+
 struct AddTransactionResponse: BaseResponse {
     var result: Bool
     var code: Int

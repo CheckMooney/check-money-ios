@@ -21,15 +21,20 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
     @IBOutlet weak var pieChartLabel: UILabel!
     @IBOutlet weak var pieChartSegControl: UISegmentedControl!
     
+    private var year = Calendar.current.component(.year, from: Date())
+    private var month = Calendar.current.component(.month, from: Date())
+    private var day = Calendar.current.component(.day, from: Date())
+    var pickerviewSetting = TransactionDatePickerSetting()
+    
     var transactionData = [Transaction]()
     
     override func viewDidLoad() {
-        headLabel.text = "\(MainHandler.year)년 \(MainHandler.month)월"
+        headLabel.text = "\(year)년 \(month)월"
         getTransactionData()
     }
     
     func getTransactionData() {
-        NetworkHandler.request(method: .GET, endpoint: "/transactions", request: EmptyRequest(), parameters: ["page":"1", "limit":"10000", "date":"\(MainHandler.year)"]) { (success, response: QueryTransactionResponse?) in
+        NetworkHandler.request(method: .GET, endpoint: "/transactions", request: EmptyRequest(), parameters: ["page":"1", "limit":"10000", "date":"\(year)"]) { (success, response: QueryTransactionResponse?) in
             DispatchQueue.main.async {
                 guard success, let res = response else {
                     print("fail to load data in SummaryViewController")
@@ -44,12 +49,36 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
                     self.chartStackView.isHidden = true
                     return
                 }
+                self.explainingLabel.isHidden = true
+                self.chartStackView.isHidden = false
                 self.transactionData = res.rows
                 self.setBarChart(segmentedControlIndex: 0)
                 self.setPieChart(segmentedControlIndex: 0)
             }
         }
     }
+    
+    @IBAction func calenderButtonClicked(_ sender: Any) {
+        let alert = UIAlertController(title: "날짜 선택", message: "\n\n\n\n\n\n\n", preferredStyle: .alert)
+        
+        let pickerView = UIPickerView(frame: CGRect(x: 5, y: 40, width: 250, height: 140))
+        
+        alert.view.addSubview(pickerView)
+        pickerView.delegate = pickerviewSetting
+        pickerView.dataSource = pickerviewSetting
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "이동", style: .default, handler: { _ in
+            self.month = pickerView.selectedRow(inComponent: 1) + 1
+            self.year = Calendar.current.component(.year, from: Date()) - pickerView.numberOfRows(inComponent: 0) + pickerView.selectedRow(inComponent: 0) + 1
+            DispatchQueue.main.async {
+                self.viewDidLoad()
+            }
+        }))
+        pickerView.selectRow(pickerviewSetting.yearList.count - 1, inComponent: 0, animated: true)
+        pickerView.selectRow(Calendar.current.component(.month, from: Date()) - 1, inComponent: 1, animated: true)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func barChartOptionSelected(_ sender: Any) {
         setBarChart(segmentedControlIndex: barChartSegControl.selectedSegmentIndex)
     }
@@ -59,8 +88,8 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
     }
     
     func setBarChart(segmentedControlIndex index: Int) {
-        var consumptionData = Array(repeating: 0.0, count: index == 0 ? 12 : getMaxDate(month: MainHandler.month))
-        var incomeData = Array(repeating: 0.0, count: index == 0 ? 12 : getMaxDate(month: MainHandler.month))
+        var consumptionData = Array(repeating: 0.0, count: index == 0 ? 12 : getMaxDate(month: month))
+        var incomeData = Array(repeating: 0.0, count: index == 0 ? 12 : getMaxDate(month: month))
         var totalPrice = 0.0
         for t in transactionData {
             let date = t.date.split(separator: "-")
@@ -68,7 +97,7 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
                 // 월별
                 if t.is_consumption == 1 {
                     consumptionData[Int(date[1])! - 1] += Double(t.price)
-                    if Int(date[1])! <= MainHandler.month || t.price > 0 {
+                    if Int(date[1])! <= month || t.price > 0 {
                         totalPrice += Double(t.price)
                     }
                 } else {
@@ -76,12 +105,12 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
                 }
             } else {
                 // 일별
-                if Int(date[1]) != MainHandler.month {
+                if Int(date[1]) != month {
                     continue
                 }
                 if t.is_consumption == 1 {
                     consumptionData[Int(date[2])! - 1] += Double(t.price)
-                    if Int(date[2])! <= MainHandler.day || t.price > 0 {
+                    if Int(date[2])! <= day || t.price > 0 {
                         totalPrice += Double(t.price)
                     }
                 } else {
@@ -89,7 +118,8 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
                 }
             }
         }
-        barChartLabel.text = "\(index == 0 ? "한 달" : "하루")에 평균 \(Int(totalPrice) / consumptionData.filter{$0 > 0.0}.count)원 정도 소비해요."
+        let nonZeroCount = consumptionData.filter{$0 > 0.0}.count
+        barChartLabel.text = "\(index == 0 ? "한 달" : "하루")에 평균 \(nonZeroCount == 0 ? 0 : (Int(totalPrice) / nonZeroCount))원 정도 소비해요."
         
         var count = 0
         let outcomeEntries = consumptionData.map { price -> BarChartDataEntry in
@@ -135,7 +165,7 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
         for t in transactionData {
             if index == 1 {
                 let monthStr = t.date.split(separator: "-")[1]
-                if Int(monthStr) != MainHandler.month {
+                if Int(monthStr) != month {
                     continue
                 }
             }
@@ -166,7 +196,7 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
         let pFormatter = NumberFormatter()
         pFormatter.numberStyle = .percent
         pFormatter.maximumFractionDigits = 2
-        pFormatter.multiplier = 1
+        pFormatter.multiplier = 100
         pFormatter.percentSymbol = " %"
         data.setValueFormatter(DefaultValueFormatter(formatter: pFormatter))
         self.pieChartView.data = data
@@ -182,7 +212,7 @@ class SummaryViewController: ChildViewController, ChartViewDelegate {
         case 1,3,5,7,8,10,12: return 31
         case 4,6,9,11: return 31
         default:
-            let year = MainHandler.year
+            let year = year
             if (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0) {
                 return 29
             } else {

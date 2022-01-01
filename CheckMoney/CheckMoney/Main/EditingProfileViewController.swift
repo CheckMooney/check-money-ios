@@ -20,6 +20,9 @@ class EditingProfileViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var saveBarItem: UIBarButtonItem!
     @IBOutlet weak var warningTextLabel: UILabel!
     
+    var name: String = ""
+    var currentPwd: String = ""
+    var newPwd: String = ""
     var newImage: UIImage? = nil // update 할 이미지
     
     override func viewDidLoad() {
@@ -69,6 +72,10 @@ class EditingProfileViewController: UIViewController, UIImagePickerControllerDel
             }
         }
         warningTextLabel.isHidden = true
+        
+        name = nameTextField.text ?? ""
+        currentPwd = currentPwdTextField.text ?? ""
+        newPwd = newPwdTextField.text ?? ""
         
         if let _ = newImage {
             uploadImage()
@@ -120,7 +127,7 @@ class EditingProfileViewController: UIViewController, UIImagePickerControllerDel
     }
     
     func updateProfile(imgUrl: String? = nil) {
-        let request = PutMyInfoRequest(img_url: imgUrl, name: nameTextField.text, password: switchIsOn ? currentPwdTextField.text : nil, new_password: switchIsOn ? newPwdTextField.text : nil)
+        let request = PutMyInfoRequest(img_url: imgUrl, name: self.name, password: switchIsOn ? self.currentPwd : nil, new_password: switchIsOn ? self.newPwd : nil)
         NetworkHandler.request(method: .PUT, endpoint: "/users/my-info", request: request) { (success, response: DefaultResponse?) in
             guard success, let _ = response else {
                 return

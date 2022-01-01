@@ -12,10 +12,6 @@ class MainHandler {
     private(set) static var category = ["식비", "쇼핑", "test1", "기타"]
     private(set) static var accounts = AccountCollection()
     
-    static var year = Calendar.current.component(.year, from: Date())
-    static var month = Calendar.current.component(.month, from: Date())
-    static var day = Calendar.current.component(.day, from: Date())
-    
     init() {
         let group = DispatchGroup()
         let queue = DispatchQueue.global()

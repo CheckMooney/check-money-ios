@@ -1,5 +1,5 @@
 //
-//  TransactionListTabViewController.swift
+//  TransactionTableViewController.swift
 //  CheckMoney
 //
 //  Created by SeungYeon Kim on 2021/11/20.
@@ -18,6 +18,9 @@ class TransactionTableViewController: ChildViewController, UITableViewDelegate, 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var totalLabel: UILabel!
     
+    private var year = Calendar.current.component(.year, from: Date())
+    private var month = Calendar.current.component(.month, from: Date())
+    
     var pickerviewSetting = TransactionDatePickerSetting()
     private let toolbar = UIToolbar()
     
@@ -35,14 +38,14 @@ class TransactionTableViewController: ChildViewController, UITableViewDelegate, 
     
     override func viewDidLoad() {
         categorizingType = .all
-        naviItem.title = "\(MainHandler.year)년 \(MainHandler.month)월"
+        naviItem.title = "\(year)년 \(month)월"
         tableView.dataSource = self
         tableView.delegate = self
         walletName.text = TransactionHandler.activeAccount?.title
         TransactionHandler.getTransactionData(account_id: TransactionHandler.activeAccount!.id) { resData in
             self.transactionData = resData
             self.addMenuForCategorizingType()
-            self.filteredData = TransactionHandler.filter(data: self.transactionData, year: MainHandler.year, month: MainHandler.month)
+            self.filteredData = TransactionHandler.filter(data: self.transactionData, year: self.year, month: self.month)
         }
     }
     
@@ -188,19 +191,19 @@ class TransactionTableViewController: ChildViewController, UITableViewDelegate, 
         menuElement.append(UIAction(title: "전체", image: nil, state: categorizingType == .all ? .on : .off, handler: {_ in
             self.categorizingType = .all
             self.addMenuForCategorizingType()
-            self.filteredData = TransactionHandler.filter(data: self.transactionData, categorizing: .all, year: MainHandler.year, month: MainHandler.month)
+            self.filteredData = TransactionHandler.filter(data: self.transactionData, categorizing: .all, year: self.year, month: self.month)
         }))
         menuElement.append(UIAction(title: "수입", image: nil, state: categorizingType == .income ? .on : .off, handler: {_ in
             self.categorizingType = .income
             self.addMenuForCategorizingType()
             print("수입 선택")
-            self.filteredData = TransactionHandler.filter(data: self.transactionData, categorizing: .income, year: MainHandler.year, month: MainHandler.month)
+            self.filteredData = TransactionHandler.filter(data: self.transactionData, categorizing: .income, year: self.year, month: self.month)
             
         }))
         menuElement.append(UIAction(title: "지출", image: nil, state: categorizingType == .consumption ? .on : .off, handler: {_ in
             self.categorizingType = .consumption
             self.addMenuForCategorizingType()
-            self.filteredData = TransactionHandler.filter(data: self.transactionData, categorizing: .consumption, year: MainHandler.year, month: MainHandler.month)
+            self.filteredData = TransactionHandler.filter(data: self.transactionData, categorizing: .consumption, year: self.year, month: self.month)
         }))
         self.categorizingButton.primaryAction = nil
         self.categorizingButton.menu = UIMenu(title: "보기 설정", image: nil, options: .displayInline, children: menuElement)
@@ -216,14 +219,14 @@ class TransactionTableViewController: ChildViewController, UITableViewDelegate, 
         pickerView.dataSource = pickerviewSetting
         alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: "이동", style: .default, handler: { _ in
-            MainHandler.month = pickerView.selectedRow(inComponent: 1) + 1
-            MainHandler.year = Calendar.current.component(.year, from: Date()) - pickerView.numberOfRows(inComponent: 0) + pickerView.selectedRow(inComponent: 0) + 1
+            self.month = pickerView.selectedRow(inComponent: 1) + 1
+            self.year = Calendar.current.component(.year, from: Date()) - pickerView.numberOfRows(inComponent: 0) + pickerView.selectedRow(inComponent: 0) + 1
             DispatchQueue.main.async {
                 self.viewDidLoad()
             }
         }))
         pickerView.selectRow(pickerviewSetting.yearList.count - 1, inComponent: 0, animated: true)
-        pickerView.selectRow(MainHandler.month - 1, inComponent: 1, animated: true)
+        pickerView.selectRow(Calendar.current.component(.month, from: Date()) - 1, inComponent: 1, animated: true)
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -244,22 +247,22 @@ class TransactionTableViewController: ChildViewController, UITableViewDelegate, 
     }
     
     @IBAction func preDateButtonClicked(_ sender: Any) {
-        let month = MainHandler.month
-        if (month - 1 == 0) {
-            MainHandler.year -= 1
-            MainHandler.month = 12
+        let cntMonth = month
+        if (cntMonth - 1 == 0) {
+            year -= 1
+            month = 12
         } else {
-            MainHandler.month -= 1
+            month -= 1
         }
         viewDidLoad()
     }
     @IBAction func postDateButtonClicked(_ sender: Any) {
-        let month = MainHandler.month
-        if (month + 1 == 13) {
-            MainHandler.year += 1
-            MainHandler.month = 1
+        let cntMonth = month
+        if (cntMonth + 1 == 13) {
+            year += 1
+            month = 1
         } else {
-            MainHandler.month += 1
+            month += 1
         }
         viewDidLoad()
     }

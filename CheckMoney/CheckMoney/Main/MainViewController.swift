@@ -25,6 +25,7 @@ class MainViewController: UIViewController, ChildViewControllerDelegate {
     
     let buttonColor = UIColor(named: "AppColor") ?? UIColor.blue
     let actionButton = JJFloatingActionButton()
+    var jjSubsItem: JJActionItem? = nil
     
     @IBOutlet weak var containerView: UIView!
     override func viewDidLoad() {
@@ -41,9 +42,9 @@ class MainViewController: UIViewController, ChildViewControllerDelegate {
         print("init MainView")
         TransactionHandler.activeAccount = MainHandler.accounts.getDefaultAccount()
     }
-
+    
     func updateTransactionData() {
-        setContainerViewController(.TransactionList)
+        setContainerViewController(currentViewContent)
     }
     
     func updateView(type: ViewContent) {
@@ -51,15 +52,15 @@ class MainViewController: UIViewController, ChildViewControllerDelegate {
     }
     
     func setFloatingButtons() {
-        let item1 = actionButton.addItem(title: "지출", image: UIImage(systemName:"arrowshape.turn.up.forward")) { _ in
-            self.addNewTransaction(isConsumption: true)
+        let item1 = actionButton.addItem(title: "수입", image: UIImage(systemName:"arrowshape.turn.up.backward")) {_ in
+            self.addNewTransaction(isConsumption: false)
         }
         item1.buttonColor = UIColor.systemBackground
         item1.buttonImageColor = buttonColor
         
-        let item2 = actionButton.addItem(title: "수입", image: UIImage(systemName:"arrowshape.turn.up.backward"), action: {_ in
-            self.addNewTransaction(isConsumption: false)
-        })
+        let item2 = actionButton.addItem(title: "지출", image: UIImage(systemName:"arrowshape.turn.up.forward")) { _ in
+            self.addNewTransaction(isConsumption: true)
+        }
         item2.buttonColor = UIColor.systemBackground
         item2.buttonImageColor = buttonColor
         
@@ -75,8 +76,26 @@ class MainViewController: UIViewController, ChildViewControllerDelegate {
         
         self.present(nextVC!, animated: true, completion: nil)
     }
-
+    
+    private func showSubscriptionsList() {
+        let nextVC = self.storyboard?.instantiateViewController(identifier: "subscriptionTableVC") as? SubscriptionTableViewController
+        nextVC?.modalTransitionStyle = .coverVertical
+        nextVC?.account = TransactionHandler.activeAccount
+        
+        self.present(nextVC!, animated: true, completion: nil)
+    }
+    
     func setContainerViewController(_ view: ViewContent) {
+        if view == .TransactionList {
+            if jjSubsItem == nil {
+                jjSubsItem = actionButton.addItem(title: "자동 지출 항목 확인", image: UIImage(systemName: "arrow.triangle.2.circlepath")) { _ in self.showSubscriptionsList() }
+            }
+        } else {
+            if jjSubsItem != nil {
+                actionButton.removeItem(jjSubsItem!)
+                jjSubsItem = nil
+            }
+        }
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let addViewController = storyboard.instantiateViewController(withIdentifier: view.rawValue)
         self.addChild(addViewController)
