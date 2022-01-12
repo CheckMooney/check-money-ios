@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SideMenu
 import Kingfisher
+import GoogleSignIn
 
 class SideMenuViewController: UIViewController {
     @IBOutlet weak var settingButton: UIButton!
@@ -73,6 +74,16 @@ class SideMenuViewController: UIViewController {
     @IBAction func logoutButtonClicked(_ sender: Any) {
         let alert = UIAlertController(title: "로그아웃", message: "정말로 로그아웃 하시겠어요?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+            if UserData.idp == "google" {
+                GIDSignIn.sharedInstance.disconnect { error in
+                    guard error == nil else { return }
+                    
+                    print("google logout completed")
+                    // Google Account disconnected from your app.
+                    // Perform clean-up actions, such as deleting data associated with the
+                    //   disconnected account.
+                }
+            }
             let naviController = UINavigationController(rootViewController: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginVC"))
             naviController.isNavigationBarHidden = true
             naviController.interactivePopGestureRecognizer?.delegate = nil

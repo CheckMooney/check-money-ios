@@ -161,8 +161,8 @@ struct UserInfoResponse: BaseResponse {
     var code: Int
     var message: String
     var id: Int
-    var email: String
-    var name: String
+    @DefaultEmptyString var email: String
+    @DefaultEmptyString var name: String
     @DefaultEmptyString var img_url: String
     @DefaultEmptyString var provider: String
 }

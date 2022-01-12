@@ -39,6 +39,19 @@ class MainHandler {
                     group.leave()
                     return
                 }
+                MainHandler.accounts.deleteAllAccounts()
+                if let count = response?.count, count == 0 {
+                    // 지갑이 하나도 없는 경우 디폴트 지갑을 생성함.
+                    let request = AccountRequest(title: "Default", description: "")
+                    NetworkHandler.request(method: .POST, endpoint: "/accounts", request: request) { (success, response: AddAccountResponse?) in
+                        guard success else {
+                            print("fail to add Account")
+                            return
+                        }
+                        let account = Account(id: response!.id, title: request.title, description: request.description, createdAt: DateFormatter().string(from: Date()))
+                        MainHandler.accounts.addAccount(account)
+                    }
+                }
                 if let list = response?.rows {
                     for i in list {
                         MainHandler.accounts.addAccount(i)
@@ -56,8 +69,11 @@ class MainHandler {
                     return
                 }
                 UserData.name = res.name
-                UserData.email = res.email
+                if (!res.email.isEmpty) {
+                    UserData.email = res.email
+                }
                 UserData.profileImageUrl = res.img_url
+                UserData.idp = res.provider
                 group.leave()
             }
         }

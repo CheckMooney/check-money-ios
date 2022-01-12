@@ -62,10 +62,24 @@ class UserData {
     static private var _imageUrl = ""
     static var profileImageUrl: String {
         get {
-            return _imageUrl.isEmpty ? _imageUrl : (NetworkHandler.baseUrl + _imageUrl)
+            return _imageUrl.isEmpty ? _imageUrl : ((_imageUrl.contains("://") ? "" : NetworkHandler.baseUrl) + _imageUrl)
         }
         set {
             _imageUrl = newValue
+        }
+    }
+    
+    static private var _idp = ""
+    static var idp: String {
+        get {
+            return UserDefaults.standard.string(forKey: "idp") ?? ""
+        }
+        set {
+            if newValue.isEmpty {
+                UserDefaults.standard.removeObject(forKey: "idp")
+            } else {
+                UserDefaults.standard.set(newValue, forKey: "idp")
+            }
         }
     }
     
@@ -74,5 +88,7 @@ class UserData {
         accessToken = ""
         email = ""
         name = ""
+        profileImageUrl = ""
+        idp = ""
     }
 }

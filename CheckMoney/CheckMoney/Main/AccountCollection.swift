@@ -18,6 +18,10 @@ class AccountCollection {
         allAccounts.removeValue(forKey: id)
     }
     
+    func deleteAllAccounts() {
+        allAccounts.removeAll()
+    }
+    
     func getCount() -> Int {
         return allAccounts.count
     }
